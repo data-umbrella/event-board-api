@@ -40,25 +40,31 @@ DELETE /api/v1/events/ID
   cd event-board-api
   ```
 
-2. Spin up development database
+2. Build the docker images
+
+  ```
+  docker-compose build
+  ```
+
+3. Spin up development database
 
   ```
   docker-compose up db
   ```
 
-3. Start up web service
+4. Start up web service
 
   ```
   docker-compose up web
   ```
 
-4. Set up development database
+5. Set up development database
 
   ```
   docker compose run web python manage.py migrate
   ```
 
-5. Create admin user
+6. Create admin user
 
   ```
   docker compose run web python manage.py createsuperuser \
@@ -66,11 +72,11 @@ DELETE /api/v1/events/ID
     --username admin
   ```
 
-6. Visit http://localhost:8000/admin in your browser to login into admin panel.
+7. Visit http://localhost:8000/admin in your browser to login into admin panel.
 
-7. Visit http://localhost:8000/api/v1 to view Django REST framework's graphical interface.
+8. Visit http://localhost:8000/api/v1 to view Django REST framework's graphical interface.
 
-8. Running tests
+9. Running tests
 
   ```
   docker-compose run web python manage.py test
