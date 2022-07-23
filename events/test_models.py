@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Event
+from events.models import Event
 from django.core.validators import ValidationError
 
 
