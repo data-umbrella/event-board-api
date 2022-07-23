@@ -32,5 +32,5 @@ class EventTest(TestCase):
 
         self.assertEqual(
             error.exception.message_dict['organization_name'],
-            ['This field cannot be null.'],
+            ['This field cannot be blank.'],
         )
