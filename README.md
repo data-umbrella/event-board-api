@@ -70,6 +70,12 @@ DELETE /api/v1/events/ID
 
 7. Visit http://localhost:8000/api/v1 to view Django REST framework's graphical interface.
 
+8. Running tests
+
+  ```
+  docker-compose run web python manage.py test
+  ```
+
 # Contributing
 
 1. Fork the repository by visiting https://github.com/specollective/event-board-api and clicking the **Fork** button in the top-right corner of the page. This action will create new copy of event-board-api repo under your GitHub user account generating a URL in the form https://github.com/<GITHUB_USERNAME>/event-board-api.

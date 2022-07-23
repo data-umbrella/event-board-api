@@ -1,17 +1,36 @@
 from django.test import TestCase
 from .models import Event
+from django.core.validators import ValidationError
 
 
 class EventTest(TestCase):
     """ Test module for Event model """
 
-    def setUp(self):
-        Event.objects.create(
+    def test_event_initialization(self):
+        event = Event.objects.create(
             title='Example Title',
             description='Example Description',
             featured=False,
+            organization_name='Example org name',
         )
 
-    def test_event_description(self):
-        event = Event.objects.get(title='Example Title')
-        self.assertEqual(event.description, "Example Description")
+        event.full_clean()
+        event.save()
+        self.assertEqual(event.organization_name, 'Example org name')
+
+
+    def test_event_validations(self):
+        event = Event.objects.create(
+            title='Example Title',
+            description='Example Description',
+            featured=False,
+            organization_name=None,
+        )
+
+        with self.assertRaises(ValidationError) as error:
+            event.full_clean()
+
+        self.assertEqual(
+            error.exception.message_dict['organization_name'],
+            ['This field cannot be blank.'],
+        )
