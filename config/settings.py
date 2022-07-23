@@ -88,31 +88,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if DEVELOPMENT_MODE is True:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_DATABASE'),
+        'USER': os.environ.get('DB_USERNAME'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('5432'),
     }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    # In the test environment we pass test variables here.
-    if os.getenv("DATABASE_URL", None) is None:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.environ.get('DB_DATABASE'),
-                'USER': os.environ.get('DB_USERNAME'),
-                'PASSWORD': os.environ.get('DB_PASSWORD'),
-                'HOST': os.environ.get('DB_HOST'),
-                'PORT': os.environ.get('DB_PORT'),
-            }
-        }
-        # raise Exception("DATABASE_URL environment variable not defined")
-    else:
-        DATABASES = {
-            "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
-        }
+}
 
 
 # Password validation
