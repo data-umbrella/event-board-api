@@ -25,6 +25,35 @@ POST /api/v1/events
 PUT /api/v1/events/ID
 DELETE /api/v1/events/ID
 ```
+# Getting started with development with docker
+
+1. Clone the git repository
+
+  ```
+  git clone git@github.com:data-umbrella/event-board-api.git
+  cd event-board-api
+  ```
+
+2. Spin up docker containers
+
+  ```
+  docker-compose up
+  ```
+
+3. Set up development database
+
+  ```
+  docker compose run web python manage.py migrate
+
+  ```
+
+4. Create admin user
+
+  ```
+  docker compose run web python manage.py createsuperuser \
+    --email example@example.com \
+    --username admin
+  ```
 
 # Getting started with local development
 
@@ -33,8 +62,8 @@ Note: These instructions should work on most Linux/Unix based machines. Local de
 1. Clone the git repository
 
   ```
-  git clone git@github.com:data-umbrella/event-board.git
-  cd event-board
+  git clone git@github.com:data-umbrella/event-board-api.git
+  cd event-board-api
   ```
 
 2. Set up environment variable file
