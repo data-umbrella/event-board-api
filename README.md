@@ -1,11 +1,17 @@
-# event-board
-Data Umbrella: Community Events Board
+# Data Umbrella Community Events Board
+
+This repository contains the code for Data Umbrella's community event board.
 
 # Overview
 
 This service implements a basic REST API that leverages the Django REST Framework.
 
-# Dependencies
+# Development Dependencies
+
+- Docker Desktop
+- Docker Compose
+
+# Python Dependencies
 
 - asgiref
 - dj-database-url
@@ -25,7 +31,7 @@ POST /api/v1/events
 PUT /api/v1/events/ID
 DELETE /api/v1/events/ID
 ```
-# Getting started with development with docker
+# Getting started with development
 
 1. Clone the git repository
 
@@ -34,20 +40,25 @@ DELETE /api/v1/events/ID
   cd event-board-api
   ```
 
-2. Spin up docker containers
+2. Spin up development database
 
   ```
-  docker-compose up
+  docker-compose up db
   ```
 
-3. Set up development database
+3. Start up web service
+
+  ```
+  docker-compose up web
+  ```
+
+4. Set up development database
 
   ```
   docker compose run web python manage.py migrate
-
   ```
 
-4. Create admin user
+5. Create admin user
 
   ```
   docker compose run web python manage.py createsuperuser \
@@ -55,63 +66,9 @@ DELETE /api/v1/events/ID
     --username admin
   ```
 
-# Getting started with local development
+6. Visit http://localhost:8000/admin in your browser to login into admin panel.
 
-Note: These instructions should work on most Linux/Unix based machines. Local development assumes you have a Python 3 installed on your computer.
-
-1. Clone the git repository
-
-  ```
-  git clone git@github.com:data-umbrella/event-board-api.git
-  cd event-board-api
-  ```
-
-2. Set up environment variable file
-
-  ```
-  cp .env.example .env
-  ```
-
-3. Set up python environment
-
-  ```
-  mkdir ~/.venvs
-  python3 -m venv ~/.venvs/django-env
-  ```
-
-4. Activate python environment
-
-  ```
-  source ~/.venvs/django-env/bin/activate
-  ```
-
-5. Install dependencies
-
-  ```
-  pip install -r requirements.txt
-  ```
-
-6. Migrate database
-
-  ```
-  python manage.py migrate
-  ```
-
-7. Create a admin user
-
-  ```
-  python manage.py createsuperuser --email example@example.com --username admin
-  ```
-
-8. Run development server
-
-  ```
-  python manage.py runserver
-  ```
-
-9. Visit http://localhost:8000/admin in your browser to login into admin panel.
-
-10. Visit http://localhost:8000/api/v1 to view Django REST framework's graphical interface.
+7. Visit http://localhost:8000/api/v1 to view Django REST framework's graphical interface.
 
 # Contributing
 
