@@ -20,6 +20,7 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - DEVELOPMENT_MODE=True
       - DB_DATABASE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres

@@ -8,7 +8,6 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from drfpasswordless.utils import CallbackToken
-from events.models import Event
 
 User = get_user_model()
 
@@ -19,6 +18,7 @@ class RegistrationAPITest(TestCase):
         self.email = 'janesmith@example.com'
         self.url = '/auth/email/'
 
+    # curl -X POST -d "email=example@example.com" localhost:8000/auth/email/
     def test_auth_registration_request(self):
         data = {'email': self.email}
 
@@ -44,6 +44,7 @@ class ConfirmationAPITest(TestCase):
         self.challenge_url = '/auth/token/'
         self.user = User.objects.create(**{'email': self.email})
 
+    # curl -X POST -d "email=example@example.com&token=815381" localhost:8000/auth/token/
     def test_email_auth_success(self):
         data = {'email': self.email}
         response = self.client.post(self.url, data)
