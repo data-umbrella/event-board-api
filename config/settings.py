@@ -167,9 +167,13 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
 
+auth_template_name = 'authentication/auth.html'
+
 PASSWORDLESS_AUTH = {
-    'PASSWORDLESS_AUTH_TYPES': ['EMAIL',],
+    'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'noreply@specollective.org',
+    'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': 'authentication/auth.html',
+    'PASSWORDLESS_CONTEXT_PROCESSORS': [],
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
