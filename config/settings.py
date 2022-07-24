@@ -158,14 +158,15 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
      ],
      'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'authentication.middleware.HttpOnlyTokenAuthentication'
      ],
      'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
+if DEVELOPMENT_MODE:
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+else:
+    CORS_ALLOWED_ORIGINS = [os.getenv('CLIENT_ORIGIN')]
 
 auth_template_name = 'authentication/auth.html'
 
