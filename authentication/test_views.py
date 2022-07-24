@@ -15,19 +15,22 @@ User = get_user_model()
 class RegistrationAPITest(TestCase):
     """ Test module for passwordless authentication"""
 
+    def setUp(self):
+        self.email = 'janesmith@example.com'
+        self.url = '/auth/email/'
+
     def test_auth_registration_request(self):
-        email = 'aaron@example.com'
-        data = {'email': email}
+        data = {'email': self.email}
 
         # Verify user doesn't exist yet
-        user = User.objects.filter(**{'email': 'aaron@example.com'}).first()
+        user = User.objects.filter(**{'email': 'janesmith@example.com'}).first()
         # Make sure our user isn't None, meaning the user was created.
         self.assertEqual(user, None)
 
         # verify a new user was created with serializer
-        response = self.client.post('/auth/email/', data)
+        response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        user = User.objects.get(**{'email': 'aaron@example.com'})
+        user = User.objects.get(**{'email': self.email})
         self.assertNotEqual(user, None)
 
         # Verify a token exists for the user
@@ -36,7 +39,7 @@ class RegistrationAPITest(TestCase):
 class ConfirmationAPITest(TestCase):
 
     def setUp(self):
-        self.email = 'aaron@example.com'
+        self.email = 'janesmith@example.com'
         self.url = '/auth/email/'
         self.challenge_url = '/auth/token/'
         self.user = User.objects.create(**{'email': self.email})
