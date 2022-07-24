@@ -38,7 +38,14 @@ else:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+DYNAMIC_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
+if DEVELOPMENT_MODE:
+    STATIC_HOSTS = ['localhost']
+else:
+    STATIC_HOSTS = [os.getenv('CLIENT_HOST')]
+
+ALLOWED_HOSTS = DYNAMIC_HOSTS + STATIC_HOSTS
 
 # Application definition
 
@@ -167,6 +174,37 @@ if DEVELOPMENT_MODE:
     CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 else:
     CORS_ALLOWED_ORIGINS = [os.getenv('CLIENT_ORIGIN')]
+
+CORS_ALLOW_HEADERS = [
+  'accept-encoding',
+  'authorization',
+  'content-disposition',
+  'content-type', 'accept',
+  'origin',
+]
+
+SESSION_COOKIE_PATH = '/;HttpOnly'
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
+
+CORS_EXPOSE_HEADERS = [
+    'Content-Type',
+    'X-CSRFToken',
+    'accept',
+    'set-cookie'
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 auth_template_name = 'authentication/auth.html'
 
