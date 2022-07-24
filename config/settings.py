@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drfpasswordless',
     'events',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -172,3 +173,5 @@ PASSWORDLESS_AUTH = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTH_USER_MODEL = 'authentication.CustomUser'
