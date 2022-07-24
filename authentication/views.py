@@ -16,7 +16,7 @@ class CurrentUserView(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         auth_header = request.META['HTTP_AUTHORIZATION']
-        cookie_token = request.COOKIES.get('TOKEN')
+        cookie_token = request.COOKIES.get('access_token')
 
         if cookie_token:
             token = cookie_token
@@ -33,6 +33,11 @@ class CurrentUserView(ObtainAuthToken):
             'is_staff': user.is_staff,
         }, status=200)
 
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response["Access-Control-Max-Age"] = "1000"
+        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+
         response.set_cookie(
             'access_token',
             value=token,
@@ -40,7 +45,7 @@ class CurrentUserView(ObtainAuthToken):
             expires=None,
             httponly=True,
             samesite='None',
-            domain='localhost',
+            domain=AUTH_COOKIE_DOMAIN,
             secure=True,
         )
 

@@ -6,7 +6,8 @@ from rest_framework import HTTP_HEADER_ENCODING, exceptions
 from django.middleware.csrf import CsrfViewMiddleware
 from django.utils.translation import gettext_lazy as _
 
-
+# NOTE: This code heavily borrows from rest_framework TokenAuthentication Class
+# This could be abstracted as a new package.
 class HttpOnlyTokenAuthentication(BaseAuthentication):
     """
     Simple token based authentication.
@@ -31,10 +32,10 @@ class HttpOnlyTokenAuthentication(BaseAuthentication):
     """
 
     def authenticate(self, request):
-        cookie_token = request.COOKIES.get('TOKEN')
+        cookie_token = request.COOKIES.get('access_token')
         auth = get_authorization_header(request).split()
 
-        if cookie_token:
+        if cookie_token is not None:
             return self.authenticate_credentials(cookie_token)
 
         if not auth or auth[0].lower() != self.keyword.lower().encode():
