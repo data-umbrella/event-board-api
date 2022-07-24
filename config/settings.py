@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -168,6 +169,9 @@ REST_FRAMEWORK = {
         'authentication.middleware.HttpOnlyTokenAuthentication'
      ],
      'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+     'DEFAULT_FILTER_BACKENDS': [
+       'django_filters.rest_framework.DjangoFilterBackend',
+     ],
 }
 
 if DEVELOPMENT_MODE:
