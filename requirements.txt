@@ -11,3 +11,4 @@ psycopg2-binary==2.9.3
 sqlparse==0.4.2
 ipdb==0.13.9
 django-filter==22.1
+Faker==13.15.1

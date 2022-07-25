@@ -2,6 +2,8 @@ from django.core.management.base import BaseCommand
 import random
 from events.models import Event
 import logging
+import datetime
+from faker import Faker
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -35,11 +37,21 @@ def clear_data():
 def create_event(num):
     """Creates an events object combining different elements from the list"""
     logger.info("Creating event")
+    faker = Faker()
+    today = datetime.date.today()
+    start_date = today + datetime.timedelta(days=num)
+    end_date = today + datetime.timedelta(days=num)
+    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    organization_name = faker.company()
+    title=faker.paragraph(nb_sentences=1)
+
     event = Event(
-        title=f"Event #{num}",
-        description="Example description",
-        organization_name="Example organization name",
+        title=title,
+        description=description,
+        organization_name=organization_name,
         featured=True,
+        start_date=start_date,
+        end_date=end_date,
     )
     event.save()
     logger.info("{} event created.".format(event))
