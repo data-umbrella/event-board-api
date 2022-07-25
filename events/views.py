@@ -19,7 +19,10 @@ class ListEvent(generics.ListCreateAPIView):
         'title',
         'description',
     ]
-    filterset_fields = ['featured']
+    filterset_fields = {
+        'featured': ['exact'],
+        'start_date':['gte', 'lte', 'exact', 'gt', 'lt'],
+    }
 
 
 class DetailEvent(generics.RetrieveUpdateDestroyAPIView):
