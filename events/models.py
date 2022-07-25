@@ -22,6 +22,11 @@ class Event(models.Model):
     cfp_due_date = models.DateField(blank=True, null=True)
     language = models.CharField(max_length=200, blank=True, null=True)
     code_of_conduct_url = models.URLField(blank=True, null=True)
+    price=models.CharField(max_length=200, blank=True, null=True)
+    event_type=models.CharField(max_length=200, blank=True, null=True)
+    event_notes = models.TextField(blank=True, null=True)
+    volunteering_notes = models.TextField(blank=True, null=True)
+    accessibility_options = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.title
