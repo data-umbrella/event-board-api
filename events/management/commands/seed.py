@@ -4,6 +4,7 @@ from events.models import Event
 import logging
 import datetime
 from faker import Faker
+import random
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -44,6 +45,7 @@ def create_event(num):
     description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     organization_name = faker.company()
     title=faker.paragraph(nb_sentences=1)
+    tags = random.sample(['python', 'machine-learning', 'data-science'], 1)
 
     event = Event(
         title=title,
@@ -52,6 +54,7 @@ def create_event(num):
         featured=True,
         start_date=start_date,
         end_date=end_date,
+        tags=tags[0]
     )
     event.save()
     logger.info("{} event created.".format(event))

@@ -18,6 +18,7 @@ class ListEvent(generics.ListCreateAPIView):
     search_fields = [
         'title',
         'description',
+        'tags',
     ]
     filterset_fields = {
         'featured': ['exact'],
