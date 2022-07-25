@@ -1,4 +1,5 @@
 import json
+import datetime
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -17,15 +18,28 @@ class ListEventsAPITest(TestCase):
         return 'Example Title'
 
     def setUp(self):
+        self.today = datetime.date.today()
+        self.yesterday = self.today - datetime.timedelta(days=1)
+        self.next_week = self.today + datetime.timedelta(days=7)
+        self.next_month = self.today + datetime.timedelta(days=40)
+
         Event.objects.create(
             title=self.event_title(),
             description='Example Description #1',
             featured=False,
+            start_date=self.today
         )
         Event.objects.create(
             title='Big Event Title',
             description='Big Event Description',
             featured=True,
+            start_date=self.yesterday,
+        )
+        Event.objects.create(
+            title='Future Event Title',
+            description='Future Event Description',
+            featured=False,
+            start_date=self.next_month,
         )
 
     def test_event_get_request(self):
@@ -58,6 +72,31 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
         self.assertEqual(response_data[0]['title'], 'Big Event Title')
+
+    def test_event_filter_by_date_request(self):
+        client = Client()
+        response = client.get(f"/api/v1/events?start_date={self.today}")
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data), 1)
+        self.assertEqual(response_data[0]['title'], 'Example Title')
+
+    def test_event_filter_by_date_range_request(self):
+        client = Client()
+        response = client.get(f"/api/v1/events?start_date__gte={self.yesterday}")
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data), 3)
+        self.assertEqual(response_data[0]['title'], 'Example Title')
+
+    def test_event_filter_by_multiple_dates_request(self):
+        client = Client()
+        query = f"start_date__gte={self.yesterday}&start_date__lte={self.next_week}"
+        response = client.get(f'/api/v1/events?{query}')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data), 2)
+        self.assertEqual(response_data[0]['title'], 'Example Title')
 
 
 class CreateEventAPITest(TestCase):

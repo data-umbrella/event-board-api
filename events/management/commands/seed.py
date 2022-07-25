@@ -39,11 +39,12 @@ def create_event(num):
         title=f"Event #{num}",
         description="Example description",
         organization_name="Example organization name",
-        featured=False,
+        featured=True,
     )
     event.save()
     logger.info("{} event created.".format(event))
     return event
+
 
 def run_seed(self, mode):
     """ Seed database based on mode
