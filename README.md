@@ -36,7 +36,7 @@ DELETE /api/v1/events/ID
 1. Clone the git repository
 
   ```
-  git clone git@github.com/data-umbrella/event-board-api.git
+  git clone git@github.com:data-umbrella/event-board-api.git
   cd event-board-api
   ```
 
