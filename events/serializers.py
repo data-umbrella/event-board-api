@@ -30,5 +30,6 @@ class EventSerializer(serializers.ModelSerializer):
             'title',
             'virtual',
             'volunteering_notes',
+            'tags',
         )
         model = models.Event

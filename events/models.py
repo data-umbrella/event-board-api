@@ -27,6 +27,7 @@ class Event(models.Model):
     event_notes = models.TextField(blank=True, null=True)
     volunteering_notes = models.TextField(blank=True, null=True)
     accessibility_options = models.TextField(blank=True, null=True)
+    tags = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.title
