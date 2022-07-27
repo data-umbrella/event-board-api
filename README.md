@@ -43,19 +43,19 @@ DELETE /api/v1/events/ID
 2. Build the docker images
 
   ```
-  docker-compose build
+  docker compose build
   ```
 
 3. Spin up development database
 
   ```
-  docker-compose up db
+  docker compose up db
   ```
 
 4. Start up web service
 
   ```
-  docker-compose up web
+  docker compose up web
   ```
 
 5. Set up development database
