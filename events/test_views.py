@@ -98,7 +98,6 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(len(response_data), 2)
         self.assertEqual(response_data[0]['title'], 'Example Title')
 
-
 class CreateEventAPITest(TestCase):
 
     def setUp(self):
@@ -113,6 +112,11 @@ class CreateEventAPITest(TestCase):
         challenge_data = {'email': self.email, 'token': callback_token}
         challenge_response = self.client.post(self.challenge_url, challenge_data)
         self.auth_token = challenge_response.data['token']
+        self.example_event = Event.objects.create(
+            title='Example title',
+            description='Example Description #1',
+            featured=False,
+        )
 
     def test_authenticated_event_post_request(self):
         request_data = {
@@ -144,6 +148,22 @@ class CreateEventAPITest(TestCase):
         )
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_authenticated_event_put_request(self):
+        request_data = {
+            'title': 'Post Event Title',
+            'description': 'Post Event Description',
+            'featured': 'False',
+        }
+        response = self.client.put(
+            f"/api/v1/events/{self.example_event.id}/",
+            json.dumps(request_data),
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {self.auth_token}",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_data = response.json()
+        self.assertEqual(response_data['title'], request_data['title'])
 
     def tearDown(self):
         self.user.delete()

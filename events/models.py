@@ -28,6 +28,7 @@ class Event(models.Model):
     volunteering_notes = models.TextField(blank=True, null=True)
     accessibility_options = models.TextField(blank=True, null=True)
     tags = models.TextField(blank=True, null=True)
+    image_file = models.ImageField(upload_to='media', blank=True, null=True)
 
     def __str__(self):
         return self.title

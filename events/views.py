@@ -4,8 +4,13 @@ from events.serializers import EventSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from rest_framework.response import Response
+from rest_framework import status
+
 
 class ListEvent(generics.ListCreateAPIView):
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [
@@ -27,6 +32,24 @@ class ListEvent(generics.ListCreateAPIView):
 
 
 class DetailEvent(generics.RetrieveUpdateDestroyAPIView):
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    """
+    Concrete view for updating a model instance.
+    """
+    def put(self, request, *args, **kwargs):
+        # print(self)
+        # image_file = request.data['image_file']
+        # request.data['image_file'] = None
+        #
+        try:
+            # instance = self.get_object()
+            # # instance.image_file = image_file
+            # instance.save()
+            return self.update(request, *args, **kwargs)
+        except BaseException as e:
+            print('something went wrong')
+            return Response({'message': str(e)}, status=400)
