@@ -4,7 +4,8 @@ from django.db import models
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    featured = models.BooleanField()
+    featured = models.BooleanField(default=False)
+    published = models.BooleanField(default=False)
     hash_tag = models.CharField(max_length=200, blank=True, null=True)
     conference_name = models.CharField(max_length=200, blank=True, null=True)
     organization_name = models.CharField(max_length=200, blank=False, null=True)
