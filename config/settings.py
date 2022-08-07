@@ -246,7 +246,7 @@ else:
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 AWS_DEFAULT_ACL = 'public-read'
