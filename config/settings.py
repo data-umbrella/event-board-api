@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENV_PATH = os.path.join(BASE_DIR, '.env')
 
+LOCALHOST_CLIENT_ORIGIN = 'http://localhost:3000'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.path.exists(ENV_PATH):
     env = environ.Env()
@@ -37,7 +39,6 @@ else:
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
-
 DYNAMIC_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 if DEVELOPMENT_MODE:
@@ -46,6 +47,11 @@ else:
     STATIC_HOSTS = [os.getenv('CLIENT_HOST')]
 
 ALLOWED_HOSTS = DYNAMIC_HOSTS + STATIC_HOSTS
+
+if DEVELOPMENT_MODE:
+    MAGIC_LINK_DOMAIN = LOCALHOST_CLIENT_ORIGIN
+else:
+    MAGIC_LINK_DOMAIN = os.getenv('CLIENT_ORIGIN')
 
 # Application definition
 
@@ -91,6 +97,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'authentication.context_processors.passwordless_email_processor',
             ],
         },
     },
@@ -179,7 +186,7 @@ REST_FRAMEWORK = {
 }
 
 if DEVELOPMENT_MODE:
-    CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+    CORS_ALLOWED_ORIGINS = [LOCALHOST_CLIENT_ORIGIN]
 else:
     CORS_ALLOWED_ORIGINS = [os.getenv('CLIENT_ORIGIN')]
 
@@ -220,7 +227,9 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'noreply@specollective.org',
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': 'authentication/auth.html',
-    'PASSWORDLESS_CONTEXT_PROCESSORS': [],
+    'PASSWORDLESS_CONTEXT_PROCESSORS': [
+        'authentication.context_processors.passwordless_email_processor',
+    ],
 }
 
 if DEVELOPMENT_MODE:
