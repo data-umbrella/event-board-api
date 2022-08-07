@@ -6,8 +6,8 @@
 </head>
 <body>
   <h1>Click the link below to sign into your account</h1>
-  <a href="https://events.dataumbrella.org/registration/verify/{{ callback_token }}">
-    https://events.dataumbrella.org/registration/verify/{{ callback_token }}
+  <a href="{{ magic_link_domain }}/registration/verify/{{ callback_token }}">
+    {{ magic_link_domain }}/registration/verify/{{ callback_token }}
   </a>
 </body>
 </html>
