@@ -4,4 +4,4 @@ db.sqlite3
 staticfiles
 python-env
 .DS_Store
-data/
+data/db
