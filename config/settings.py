@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'events',
     'authentication',
     'storages',
+    'contact_emails',
 ]
 
 MIDDLEWARE = [
