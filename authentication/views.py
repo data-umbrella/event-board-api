@@ -15,7 +15,7 @@ class CurrentUserView(ObtainAuthToken):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        auth_header = request.META['HTTP_AUTHORIZATION']
+        auth_header = request.META.get('HTTP_AUTHORIZATION')
         cookie_token = request.COOKIES.get('access_token')
 
         if cookie_token:
