@@ -1,3 +1,5 @@
+import os.path
+from django.conf import settings
 from django.core.management.base import BaseCommand
 import random
 from events.models import Event
@@ -5,6 +7,7 @@ import logging
 import datetime
 from faker import Faker
 import random
+import csv
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -35,26 +38,28 @@ def clear_data():
     Event.objects.all().delete()
 
 
-def create_event(num):
+def create_event(event_data):
     """Creates an events object combining different elements from the list"""
     logger.info("Creating event")
     faker = Faker()
     today = datetime.date.today()
-    start_date = today + datetime.timedelta(days=num)
-    end_date = today + datetime.timedelta(days=num)
+    start_date = event_data['start_date']
+    end_date = event_data['end_date']
     description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     organization_name = faker.company()
     title=faker.paragraph(nb_sentences=1)
     tags = random.sample(['python', 'machine-learning', 'data-science'], 1)
 
     event = Event(
-        title=title,
+        title=event_data['event_name'],
         description=description,
-        organization_name=organization_name,
-        featured=True,
+        organization_name=event_data['organization_name'],
+        organization_url=event_data['organization_url'],
+        featured=event_data['featured'] == 'True',
         start_date=start_date,
         end_date=end_date,
-        tags=tags[0]
+        tags=event_data['tags'],
+        event_url=event_data['event_url'],
     )
     event.save()
     logger.info("{} event created.".format(event))
@@ -69,9 +74,13 @@ def run_seed(self, mode):
     """
     # Clear data from tables
     clear_data()
+    
     if mode == MODE_CLEAR:
         return
+    
+    with open(f"{settings.BASE_DIR}/data/seeds/events.csv", newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            create_event(row)
 
-    # Creating 15 eventses
-    for i in range(15):
-        create_event(i)
+
