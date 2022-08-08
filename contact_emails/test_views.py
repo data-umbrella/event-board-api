@@ -3,7 +3,7 @@ from rest_framework import status
 import json
 
 
-class EmailsTest(TestCase):
+class ContactEmailsTest(TestCase):
     def test_get_index_request_success(self):
         client = Client()
         response = client.get(
