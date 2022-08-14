@@ -31,6 +31,10 @@ class Event(models.Model):
     accessibility_options = models.TextField(blank=True, null=True)
     tags = models.TextField(blank=True, null=True)
     image_file = models.ImageField(upload_to='media', blank=True, null=True)
+    image_url=models.URLField(blank=True, null=True)
+    cfp_url = models.URLField(blank=True, null=True)
+    price_range=models.CharField(max_length=200, blank=True, null=True)
+
 
     def __str__(self):
         return self.title
