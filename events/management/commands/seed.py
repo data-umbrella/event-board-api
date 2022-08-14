@@ -37,31 +37,52 @@ def clear_data():
     logger.info("Delete event instances")
     Event.objects.all().delete()
 
+def coerce_boolean(value):
+    if value == 'Yes': return True
+    if value == 'No': return False
+
+    return None
+
+def coerce_date_field(value):
+    if value == '': return None
+
+    return value
+
 
 def create_event(event_data):
     """Creates an events object combining different elements from the list"""
     logger.info("Creating event")
-    faker = Faker()
-    today = datetime.date.today()
-    start_date = event_data['start_date']
-    end_date = event_data['end_date']
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    organization_name = faker.company()
-    title=faker.paragraph(nb_sentences=1)
-    tags = random.sample(['python', 'machine-learning', 'data-science'], 1)
 
     event = Event(
-        title=event_data['event_name'],
-        description=description,
+        event_name=event_data['event_name'],
+        description='',
         organization_name=event_data['organization_name'],
         organization_url=event_data['organization_url'],
         featured=event_data['featured'] == 'True',
-        start_date=start_date,
-        end_date=end_date,
+        start_date=event_data['start_date'],
+        end_date=event_data['end_date'],
         tags=event_data['tags'],
         event_url=event_data['event_url'],
+        image_url=event_data['image_url'],
+        code_of_conduct_url=event_data['code_of_conduct_url'],
+        acronym=event_data['acronym'],
+        language=event_data['language'],
+        region=event_data['region'],
+        in_person=coerce_boolean(event_data['in_person']), 
+        virtual=coerce_boolean(event_data['virtual']),
+        hash_tag=event_data['hash_tag'],
+        cfp_due_date=coerce_date_field(event_data['cfp_due_date']),
+        price=event_data['price'],
+        price_range=event_data['price_range'],
+        cfp_url=event_data['cfp_url'],
     )
-    event.save()
+    
+    try:
+        event.save()
+    except:
+        print('Something went wrong')
+    
+
     logger.info("{} event created.".format(event))
     return event
 

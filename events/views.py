@@ -22,6 +22,8 @@ class ListEvent(generics.ListCreateAPIView):
     ]
     search_fields = [
         'title',
+        'event_name',
+        'organization_name',
         'description',
         'tags',
     ]
