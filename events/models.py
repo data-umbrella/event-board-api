@@ -1,9 +1,16 @@
 from django.db import models
+from django.conf import settings
 
 
 class Event(models.Model):
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     event_name = models.CharField(max_length=200, blank=True, null=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     featured = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
     hash_tag = models.CharField(max_length=200, blank=True, null=True)
@@ -23,17 +30,16 @@ class Event(models.Model):
     cfp_due_date = models.DateField(blank=True, null=True)
     language = models.CharField(max_length=200, blank=True, null=True)
     code_of_conduct_url = models.URLField(blank=True, null=True)
-    price=models.CharField(max_length=200, blank=True, null=True)
-    event_type=models.CharField(max_length=200, blank=True, null=True)
+    price = models.CharField(max_length=200, blank=True, null=True)
+    event_type = models.CharField(max_length=200, blank=True, null=True)
     event_notes = models.TextField(blank=True, null=True)
     volunteering_notes = models.TextField(blank=True, null=True)
     accessibility_options = models.TextField(blank=True, null=True)
     tags = models.TextField(blank=True, null=True)
     image_file = models.ImageField(upload_to='media', blank=True, null=True)
-    image_url=models.URLField(blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
     cfp_url = models.URLField(blank=True, null=True)
-    price_range=models.CharField(max_length=200, blank=True, null=True)
-
+    price_range = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return self.event_name
