@@ -14,7 +14,7 @@ User = get_user_model()
 class ListEventsAPITest(TestCase):
     """ Test module for event list """
 
-    def event_title(self):
+    def event_name(self):
         return 'Example Title'
 
     def setUp(self):
@@ -24,19 +24,19 @@ class ListEventsAPITest(TestCase):
         self.next_month = self.today + datetime.timedelta(days=40)
 
         Event.objects.create(
-            title=self.event_title(),
+            event_name=self.event_name(),
             description='Example Description #1',
             featured=False,
             start_date=self.today
         )
         Event.objects.create(
-            title='Big Event Title',
+            event_name='Big Event Title',
             description='Big Event Description',
             featured=True,
             start_date=self.yesterday,
         )
         Event.objects.create(
-            title='Future Event Title',
+            event_name='Future Event Title',
             description='Future Event Description',
             featured=False,
             start_date=self.next_month,
@@ -47,7 +47,7 @@ class ListEventsAPITest(TestCase):
         response = client.get('/api/v1/events')
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response_data[0]['title'], self.event_title())
+        self.assertEqual(response_data[0]['event_name'], self.event_name())
 
     def test_event_filter_description_request(self):
         client = Client()
@@ -55,7 +55,7 @@ class ListEventsAPITest(TestCase):
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
-        self.assertEqual(response_data[0]['title'], 'Big Event Title')
+        self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
 
     def test_event_filter_title_request(self):
         client = Client()
@@ -63,7 +63,7 @@ class ListEventsAPITest(TestCase):
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
-        self.assertEqual(response_data[0]['title'], 'Big Event Title')
+        self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
 
     def test_event_filter_featured_request(self):
         client = Client()
@@ -71,7 +71,7 @@ class ListEventsAPITest(TestCase):
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
-        self.assertEqual(response_data[0]['title'], 'Big Event Title')
+        self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
 
     def test_event_filter_by_date_request(self):
         client = Client()
@@ -79,7 +79,7 @@ class ListEventsAPITest(TestCase):
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
-        self.assertEqual(response_data[0]['title'], 'Example Title')
+        self.assertEqual(response_data[0]['event_name'], 'Example Title')
 
     def test_event_filter_by_date_range_request(self):
         client = Client()
@@ -87,7 +87,7 @@ class ListEventsAPITest(TestCase):
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 3)
-        self.assertEqual(response_data[0]['title'], 'Example Title')
+        self.assertEqual(response_data[0]['event_name'], 'Example Title')
 
     def test_event_filter_by_multiple_dates_request(self):
         client = Client()
@@ -96,7 +96,7 @@ class ListEventsAPITest(TestCase):
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 2)
-        self.assertEqual(response_data[0]['title'], 'Example Title')
+        self.assertEqual(response_data[0]['event_name'], 'Example Title')
 
 class CreateEventAPITest(TestCase):
 
@@ -113,14 +113,14 @@ class CreateEventAPITest(TestCase):
         challenge_response = self.client.post(self.challenge_url, challenge_data)
         self.auth_token = challenge_response.data['token']
         self.example_event = Event.objects.create(
-            title='Example title',
+            event_name='Example title',
             description='Example Description #1',
             featured=False,
         )
 
     def test_authenticated_event_post_request(self):
         request_data = {
-            'title': 'Post Event Title',
+            'event_name': 'Post Event Title',
             'description': 'Post Event Description',
             'featured': 'False',
         }
@@ -132,11 +132,11 @@ class CreateEventAPITest(TestCase):
         )
         response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response_data['title'], request_data['title'])
+        self.assertEqual(response_data['event_name'], request_data['event_name'])
 
     def test_unauthenticated_event_post_request(self):
         request_data = {
-            'title': 'Post Event Title',
+            'event_name': 'Post Event Title',
             'description': 'Post Event Description',
             'featured': 'False',
         }
@@ -151,7 +151,7 @@ class CreateEventAPITest(TestCase):
 
     def test_authenticated_event_put_request(self):
         request_data = {
-            'title': 'Post Event Title',
+            'event_name': 'Post Event Title',
             'description': 'Post Event Description',
             'featured': 'False',
         }
@@ -163,7 +163,7 @@ class CreateEventAPITest(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_data = response.json()
-        self.assertEqual(response_data['title'], request_data['title'])
+        self.assertEqual(response_data['event_name'], request_data['event_name'])
 
     def tearDown(self):
         self.user.delete()

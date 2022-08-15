@@ -8,7 +8,7 @@ class EventTest(TestCase):
 
     def test_event_initialization(self):
         event = Event.objects.create(
-            title='Example Title',
+            event_name='Example Title',
             description='Example Description',
             featured=False,
             organization_name='Example org name',
@@ -21,7 +21,7 @@ class EventTest(TestCase):
 
     def test_event_validations(self):
         event = Event.objects.create(
-            title='Example Title',
+            event_name='Example Title',
             description='Example Description',
             featured=False,
             organization_name=None,

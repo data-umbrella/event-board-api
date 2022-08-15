@@ -21,7 +21,6 @@ class ListEvent(generics.ListCreateAPIView):
       DjangoFilterBackend
     ]
     search_fields = [
-        'title',
         'event_name',
         'organization_name',
         'description',
