@@ -35,6 +35,9 @@ class HttpOnlyTokenAuthentication(BaseAuthentication):
         cookie_token = request.COOKIES.get('access_token')
         auth = get_authorization_header(request).split()
 
+        if cookie_token == '':
+            cookie_token = None
+
         if cookie_token is not None:
             return self.authenticate_credentials(cookie_token)
 
