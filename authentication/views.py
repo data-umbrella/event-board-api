@@ -3,7 +3,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
+from rest_framework.decorators import api_view
+
 
 
 DEVELOPMENT_MODE = os.environ.get('DEVELOPMENT_MODE', 'False') == 'True'
@@ -50,3 +52,14 @@ class CurrentUserView(ObtainAuthToken):
         )
 
         return response
+
+
+# DELETE /api/sign_out
+@api_view(['DELETE'])
+def sign_out(request):
+    """
+    API endpoint to logout a current user
+    """
+    response = Response(status=status.HTTP_204_NO_CONTENT)
+    response.delete_cookie('access_token')
+    return response
