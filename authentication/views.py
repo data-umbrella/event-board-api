@@ -61,5 +61,13 @@ def sign_out(request):
     API endpoint to logout a current user
     """
     response = Response(status=status.HTTP_204_NO_CONTENT)
-    response.delete_cookie('access_token')
+    response.set_cookie(
+        'access_token',
+        value='',
+        expires=None,
+        httponly=True,
+        samesite='None',
+        domain=AUTH_COOKIE_DOMAIN,
+        secure=True,
+    )
     return response
