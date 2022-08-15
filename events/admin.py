@@ -4,7 +4,6 @@ from events.models import Event
 
 class EventAdmin(admin.ModelAdmin):
     list_display = (
-      "id",
       "event_name",
       "organization_name",
       "start_date",
@@ -12,7 +11,7 @@ class EventAdmin(admin.ModelAdmin):
     )
 
     def identifier(self, obj):
-        return obj.id
+        return self.event_name
 
 
 admin.site.register(Event, EventAdmin)
