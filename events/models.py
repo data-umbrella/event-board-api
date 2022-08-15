@@ -3,7 +3,6 @@ from django.db import models
 
 class Event(models.Model):
     event_name = models.CharField(max_length=200, blank=True, null=True)
-    title = models.CharField(max_length=200)
     description = models.TextField()
     featured = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
