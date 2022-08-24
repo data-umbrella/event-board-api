@@ -42,14 +42,11 @@ class DetailEvent(generics.RetrieveUpdateDestroyAPIView):
     Concrete view for updating a model instance.
     """
     def put(self, request, *args, **kwargs):
-        # print(self)
-        # image_file = request.data['image_file']
-        # request.data['image_file'] = None
-        #
         try:
-            # instance = self.get_object()
-            # # instance.image_file = image_file
-            # instance.save()
+            instance = self.get_object()
+            instance.author = request.user
+            instance.save()
+
             return self.update(request, *args, **kwargs)
         except BaseException as e:
             print('something went wrong')

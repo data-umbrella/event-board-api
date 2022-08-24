@@ -4,9 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, mixins, status
-from rest_framework.decorators import api_view
-
-
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 DEVELOPMENT_MODE = os.environ.get('DEVELOPMENT_MODE', 'False') == 'True'
 PROD_COOKIE_DOMAIN = os.environ.get('PROD_COOKIE_DOMAIN', '')
@@ -33,6 +31,7 @@ class CurrentUserView(ObtainAuthToken):
         response = Response({
             'email': user.email,
             'is_staff': user.is_staff,
+            'id': user.id,
         }, status=200)
 
         response["Access-Control-Allow-Origin"] = "*"
@@ -56,6 +55,8 @@ class CurrentUserView(ObtainAuthToken):
 
 # DELETE /api/sign_out
 @api_view(['DELETE'])
+@authentication_classes([])
+@permission_classes([])
 def sign_out(request):
     """
     API endpoint to logout a current user
