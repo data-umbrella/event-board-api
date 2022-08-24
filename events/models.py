@@ -9,13 +9,13 @@ class Event(models.Model):
         null=True,
         blank=True,
     )
-    event_name = models.CharField(max_length=200, blank=True, null=True)
+    event_name = models.CharField(max_length=200, blank=False, null=True)
     description = models.TextField(blank=True, null=True)
     featured = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
     hash_tag = models.CharField(max_length=200, blank=True, null=True)
     conference_name = models.CharField(max_length=200, blank=True, null=True)
-    organization_name = models.CharField(max_length=200, blank=False, null=True)
+    organization_name = models.CharField(max_length=200, blank=True, null=True)
     acronym = models.CharField(max_length=200, blank=True, null=True)
     event_url = models.URLField(blank=True, null=True)
     organization_url = models.URLField(blank=True, null=True)
