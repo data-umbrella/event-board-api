@@ -81,6 +81,8 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
         self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
+        self.assertEqual(response_data[0]['start_date'], str(self.yesterday))
+
 
     def test_event_filter_by_date_request(self):
         client = Client()
