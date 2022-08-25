@@ -67,7 +67,7 @@ DELETE /api/v1/events/ID
 6. Create admin user
 
   ```
-  docker compose run web python manage.py createsuperuser --email example@example.com --username admin
+  docker compose run web python manage.py createsuperuser --email example@example.com
   ```
 
 7. Visit http://localhost:8000/admin in your browser to login into admin panel.

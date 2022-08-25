@@ -33,6 +33,7 @@ class ListEventsAPITest(TestCase):
             event_name='Big Event Title',
             description='Big Event Description',
             featured=True,
+            published=True,
             start_date=self.yesterday,
         )
         Event.objects.create(
@@ -72,6 +73,16 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 1)
         self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
+    
+    def test_event_filter_published_request(self):
+        client = Client()
+        response = client.get('/api/v1/events?published=True')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data), 1)
+        self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
+        self.assertEqual(response_data[0]['start_date'], str(self.yesterday))
+
 
     def test_event_filter_by_date_request(self):
         client = Client()

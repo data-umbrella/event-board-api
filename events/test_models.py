@@ -21,7 +21,7 @@ class EventTest(TestCase):
 
     def test_event_validations(self):
         event = Event.objects.create(
-            event_name='Example Title',
+            event_name=None,
             description='Example Description',
             featured=False,
             organization_name=None,
@@ -30,7 +30,7 @@ class EventTest(TestCase):
         with self.assertRaises(ValidationError) as error:
             event.full_clean()
 
-        self.assertEqual(
-            error.exception.message_dict['organization_name'],
-            ['This field cannot be blank.'],
-        )
+            self.assertEqual(
+                error.exception.message_dict['event_name'],
+                ['This field cannot be blank.'],
+            )
