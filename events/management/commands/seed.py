@@ -37,20 +37,28 @@ def clear_data():
     logger.info("Delete event instances")
     Event.objects.all().delete()
 
+
 def coerce_boolean(value):
     if value == 'Yes': return True
     if value == 'No': return False
 
     return None
 
+
 def coerce_date_field(value):
     if value == '': return None
 
     return value
 
+def parse_url(raw_url):
+    if raw_url.lower() == 'not found':
+        return
+    else:
+        return raw_url
 
 def create_event(event_data):
     """Creates an events object combining different elements from the list"""
+
     logger.info("Creating event")
 
     event = Event(
@@ -64,11 +72,11 @@ def create_event(event_data):
         tags=event_data['tags'],
         event_url=event_data['event_url'],
         image_url=event_data['image_url'],
-        code_of_conduct_url=event_data['code_of_conduct_url'],
+        code_of_conduct_url=parse_url(event_data['code_of_conduct_url']),
         acronym=event_data['acronym'],
         language=event_data['language'],
         region=event_data['region'],
-        in_person=coerce_boolean(event_data['in_person']), 
+        in_person=coerce_boolean(event_data['in_person']),
         virtual=coerce_boolean(event_data['virtual']),
         hash_tag=event_data['hash_tag'],
         cfp_due_date=coerce_date_field(event_data['cfp_due_date']),
@@ -76,14 +84,13 @@ def create_event(event_data):
         price_range=event_data['price_range'],
         cfp_url=event_data['cfp_url'],
     )
-    
+
     try:
         event.save()
+        logger.info("{} event created.".format(event))
     except:
-        print('Something went wrong')
-    
+        logger.info(event_data)
 
-    logger.info("{} event created.".format(event))
     return event
 
 
@@ -95,13 +102,11 @@ def run_seed(self, mode):
     """
     # Clear data from tables
     clear_data()
-    
+
     if mode == MODE_CLEAR:
         return
-    
+
     with open(f"{settings.BASE_DIR}/data/seeds/events.csv", newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             create_event(row)
-
-

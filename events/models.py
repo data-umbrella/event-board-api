@@ -9,7 +9,7 @@ class Event(models.Model):
         null=True,
         blank=True,
     )
-    event_name = models.CharField(max_length=200, blank=False, null=True)
+    event_name = models.CharField(max_length=500, blank=False, null=True)
     description = models.TextField(blank=True, null=True)
     featured = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
@@ -37,7 +37,7 @@ class Event(models.Model):
     accessibility_options = models.TextField(blank=True, null=True)
     tags = models.TextField(blank=True, null=True)
     image_file = models.ImageField(upload_to='media', blank=True, null=True)
-    image_url = models.URLField(blank=True, null=True)
+    image_url = models.URLField(max_length=500, blank=True, null=True)
     cfp_url = models.URLField(blank=True, null=True)
     price_range = models.CharField(max_length=200, blank=True, null=True)
 
