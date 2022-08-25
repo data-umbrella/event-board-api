@@ -50,6 +50,11 @@ def coerce_date_field(value):
 
     return value
 
+def parse_url(raw_url):
+    if raw_url.lower() == 'not found':
+        return
+    else:
+        return raw_url
 
 def create_event(event_data):
     """Creates an events object combining different elements from the list"""
@@ -67,7 +72,7 @@ def create_event(event_data):
         tags=event_data['tags'],
         event_url=event_data['event_url'],
         image_url=event_data['image_url'],
-        code_of_conduct_url=event_data['code_of_conduct_url'],
+        code_of_conduct_url=parse_url(event_data['code_of_conduct_url']),
         acronym=event_data['acronym'],
         language=event_data['language'],
         region=event_data['region'],
