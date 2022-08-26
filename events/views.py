@@ -29,6 +29,7 @@ class ListEvent(generics.ListCreateAPIView):
     filterset_fields = {
         'featured': ['exact'],
         'published': ['exact'],
+        'region': ['exact'],
         'start_date':['gte', 'lte', 'exact', 'gt', 'lt'],
     }
 
