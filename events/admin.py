@@ -17,8 +17,6 @@ class EventAdmin(admin.ModelAdmin):
 
     def identifier(self, obj):
         return self.event_name
-    
-    
 
 
 admin.site.register(Event, EventAdmin)

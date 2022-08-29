@@ -45,8 +45,9 @@ class DetailEvent(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
-            instance.author = request.user
-            instance.save()
+            if instance.author is None:
+                instance.author = request.user
+                instance.save()
 
             return self.update(request, *args, **kwargs)
         except BaseException as e:
