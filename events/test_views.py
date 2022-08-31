@@ -35,6 +35,7 @@ class ListEventsAPITest(TestCase):
             featured=True,
             published=True,
             start_date=self.yesterday,
+            region="europe",
         )
         Event.objects.create(
             event_name='Future Event Title',
@@ -83,7 +84,6 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
         self.assertEqual(response_data[0]['start_date'], str(self.yesterday))
 
-
     def test_event_filter_by_date_request(self):
         client = Client()
         response = client.get(f"/api/v1/events?start_date={self.today}")
@@ -108,6 +108,15 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data), 2)
         self.assertEqual(response_data[0]['event_name'], 'Example Title')
+    
+    def test_event_filter_by_region(self):
+        client = Client()
+        response = client.get('/api/v1/events?region=europe')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data), 1)
+        self.assertEqual(response_data[0]['event_name'], 'Big Event Title')
+        self.assertEqual(response_data[0]['region'], 'europe')
 
 class CreateEventAPITest(TestCase):
 
