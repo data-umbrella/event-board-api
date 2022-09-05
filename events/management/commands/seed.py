@@ -47,14 +47,18 @@ def coerce_boolean(value):
 
 def coerce_date_field(value):
     if value == '': return None
-
     return value
+
 
 def parse_url(raw_url):
     if raw_url.lower() == 'not found':
         return
     else:
         return raw_url
+
+def format_region(raw_string):
+   return "-".join(raw_string.lower().split())
+
 
 def create_event(event_data):
     """Creates an events object combining different elements from the list"""
@@ -66,7 +70,7 @@ def create_event(event_data):
         description='',
         organization_name=event_data['organization_name'],
         organization_url=event_data['organization_url'],
-        featured=event_data['featured'] == 'True',
+        featured=event_data['featured'] == '1',
         start_date=event_data['start_date'],
         end_date=event_data['end_date'],
         tags=event_data['tags'],
@@ -75,7 +79,7 @@ def create_event(event_data):
         code_of_conduct_url=parse_url(event_data['code_of_conduct_url']),
         acronym=event_data['acronym'],
         language=event_data['language'],
-        region=event_data['region'],
+        region=format_region(event_data['region']),
         in_person=coerce_boolean(event_data['in_person']),
         virtual=coerce_boolean(event_data['virtual']),
         hash_tag=event_data['hash_tag'],
