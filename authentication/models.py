@@ -35,6 +35,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    subscribe_to_newsletter = models.BooleanField(default=False, blank=True, null=True)
 
     objects = CustomUserManager()
 
