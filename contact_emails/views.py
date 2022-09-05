@@ -18,21 +18,21 @@ def index(request):
         # TODO: parse other parameters
         email = data['email']
         message = data['message']
-        # TO DO: add more params in body, test, and stretch goal to add template
-        body = f"""
-            message: {message}
-            
-            """
 
+        # TODO: add more params in body, test, and stretch goal to add template
+        body = f"""
+        sender: {email}
+        message: {message}
+        """
+
+        # NOTE: For this contact form we are sending the email to the sender.
         send_mail(
             'Contact Form Submission', #subject
-            message, #body
+            body, # body
             'learn@specollective.org', #sender
-            [email], #recipient
+            ['learn@specollective.org'], #recipient
             fail_silently=False,
         )
-
-        # TODO: Implement logic to send email
 
         # TODO: Determine what attributes we need to send to the client.
         return Response({'status': 'Success'}, status=status.HTTP_201_CREATED)
