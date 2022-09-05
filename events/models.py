@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.html import format_html
 
 
 class Event(models.Model):
@@ -43,3 +44,7 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+    
+    def review_link(self):
+        url = f"https://events.dataumbrella.org/events/{self.id}/details"
+        return format_html(f'<a href="{url}" target="_blank">Review</a>', url=url)
