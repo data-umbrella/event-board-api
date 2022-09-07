@@ -16,21 +16,23 @@ def index(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         # TODO: parse other parameters
-        email = data['email']
-        message = data['message']
+        contact_email = 'learn@specollective.org'
 
         # TODO: add more params in body, test, and stretch goal to add template
         body = f"""
-        sender: {email}
-        message: {message}
+        name: {data['mame']}
+        email: {data['email']}
+        message: {data['message']}
+        reference: {data['reference']}
+        topic: {data['topicType']}
         """
 
         # NOTE: For this contact form we are sending the email to the sender.
         send_mail(
             'Contact Form Submission', #subject
             body, # body
-            'learn@specollective.org', #sender
-            ['learn@specollective.org'], #recipient
+            contact_email, #sender
+            [contact_email], #recipient
             fail_silently=False,
         )
 
