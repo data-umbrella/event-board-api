@@ -28,11 +28,13 @@ LOCALHOST_CLIENT_ORIGIN = 'http://localhost:3000'
 if os.path.exists(ENV_PATH):
     env = environ.Env()
     environ.Env.read_env(ENV_PATH)
-    DEBUG = env('DEBUG') == "True"
-    DEVELOPMENT_MODE = env('DEVELOPMENT_MODE') == "True"
+    DEBUG = env('DEBUG') == 'True'
+    DEVELOPMENT_MODE = env('DEVELOPMENT_MODE') == 'True'
+    AUTH_COOKIE_DOMAIN = 'localhost'
 else:
-    DEBUG = os.getenv("DEBUG", "False") == "True"
-    DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+    DEBUG = os.getenv('DEBUG', 'False') == 'True'
+    DEVELOPMENT_MODE = os.getenv('DEVELOPMENT_MODE', 'False') == 'True'
+    AUTH_COOKIE_DOMAIN = os.environ.get('PROD_COOKIE_DOMAIN', '')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -232,6 +234,8 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_CONTEXT_PROCESSORS': [
         'authentication.context_processors.passwordless_email_processor',
     ],
+    'PASSWORDLESS_USER_MARK_EMAIL_VERIFIED': True,
+    'PASSWORDLESS_USER_EMAIL_VERIFIED_FIELD_NAME': 'email_verified',
 }
 
 if DEVELOPMENT_MODE:

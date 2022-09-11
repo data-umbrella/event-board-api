@@ -22,7 +22,7 @@ class HttpOnlyTokenAuthentication(BaseAuthentication):
     def get_model(self):
         if self.model is not None:
             return self.model
-        from rest_framework.authtoken.models import Token
+
         return Token
 
     """
