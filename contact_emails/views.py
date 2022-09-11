@@ -1,10 +1,13 @@
+import os
+import json
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.mail import send_mail
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-import json
-from django.core.mail import send_mail
+
 
 
 @api_view(['GET', 'POST'])
@@ -15,12 +18,12 @@ def index(request):
     
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        # TODO: parse other parameters
-        contact_email = 'learn@specollective.org'
 
-        # TODO: add more params in body, test, and stretch goal to add template
+        subject = 'Contact Form Submission'
+
+        # TODO: Enforce snake case for topicType on client side.
         body = f"""
-        name: {data['mame']}
+        name: {data['name']}
         email: {data['email']}
         message: {data['message']}
         reference: {data['reference']}
@@ -29,10 +32,10 @@ def index(request):
 
         # NOTE: For this contact form we are sending the email to the sender.
         send_mail(
-            'Contact Form Submission', #subject
-            body, # body
-            contact_email, #sender
-            [contact_email], #recipient
+            subject,
+            body,
+            settings.EMAIL_HOST_USER, #sender
+            [settings.EMAIL_HOST_USER], #recipient
             fail_silently=False,
         )
 
