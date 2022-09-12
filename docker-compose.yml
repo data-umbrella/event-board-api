@@ -28,3 +28,4 @@ services:
       - DB_PORT=5432
     depends_on:
       - db
+    platform: linux/amd64
