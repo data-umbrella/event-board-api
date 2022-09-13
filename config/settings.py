@@ -240,6 +240,7 @@ PASSWORDLESS_AUTH = {
 
 if DEVELOPMENT_MODE:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_HOST_USER = 'example@example.com'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'

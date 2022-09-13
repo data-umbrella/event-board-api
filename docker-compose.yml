@@ -26,5 +26,6 @@ services:
       - DB_PASSWORD=postgres
       - DB_HOST=db
       - DB_PORT=5432
+      - EMAIL_HOST_USER=example@example.com
     depends_on:
       - db
