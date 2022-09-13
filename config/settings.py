@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'authentication',
     'storages',
     'contact_emails',
+    'weekly_digest',
 ]
 
 MIDDLEWARE = [
