@@ -27,7 +27,9 @@ class ListEventsAPITest(TestCase):
             event_name=self.event_name(),
             description='Example Description #1',
             featured=False,
-            start_date=self.today
+            start_date=self.today,
+            language='en',
+            event_type='conference',
         )
         Event.objects.create(
             event_name='Big Event Title',
@@ -108,7 +110,7 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_data['results']), 2)
         self.assertEqual(response_data['results'][0]['event_name'], 'Example Title')
-    
+
     def test_event_filter_by_region(self):
         client = Client()
         response = client.get('/api/v1/events?region=europe')
@@ -117,6 +119,33 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(len(response_data['results']), 1)
         self.assertEqual(response_data['results'][0]['event_name'], 'Big Event Title')
         self.assertEqual(response_data['results'][0]['region'], 'europe')
+
+    def test_event_filter_by_language(self):
+        client = Client()
+        response = client.get('/api/v1/events?language=en')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data['results']), 1)
+        self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
+        self.assertEqual(response_data['results'][0]['language'], 'en')
+
+    def test_event_filter_by_event_type(self):
+        client = Client()
+        response = client.get('/api/v1/events?event_type=conference')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data['results']), 1)
+        self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
+        self.assertEqual(response_data['results'][0]['event_type'], 'conference')
+
+    def test_event_filter_by_event_type(self):
+        client = Client()
+        response = client.get('/api/v1/events?event_type=conference')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data['results']), 1)
+        self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
+        self.assertEqual(response_data['results'][0]['event_type'], 'conference')
 
 class CreateEventAPITest(TestCase):
 

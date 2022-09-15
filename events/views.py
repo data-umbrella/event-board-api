@@ -31,6 +31,9 @@ class ListEvent(generics.ListCreateAPIView):
         'published': ['exact'],
         'region': ['exact'],
         'start_date':['gte', 'lte', 'exact', 'gt', 'lt'],
+        'language': ['exact'],
+        'event_type': ['exact'],
+        'price': ['exact'],
     }
 
 
