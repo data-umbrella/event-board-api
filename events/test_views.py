@@ -30,6 +30,7 @@ class ListEventsAPITest(TestCase):
             start_date=self.today,
             language='en',
             event_type='conference',
+            price='one-to-nine',
         )
         Event.objects.create(
             event_name='Big Event Title',
@@ -137,6 +138,15 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(len(response_data['results']), 1)
         self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
         self.assertEqual(response_data['results'][0]['event_type'], 'conference')
+
+    def test_event_filter_by_event_price(self):
+        client = Client()
+        response = client.get('/api/v1/events?price=one-to-nine')
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response_data['results']), 1)
+        self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
+        self.assertEqual(response_data['results'][0]['price'], 'one-to-nine')
 
 
 class CreateEventAPITest(TestCase):
