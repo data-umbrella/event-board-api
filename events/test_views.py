@@ -138,14 +138,6 @@ class ListEventsAPITest(TestCase):
         self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
         self.assertEqual(response_data['results'][0]['event_type'], 'conference')
 
-    def test_event_filter_by_event_type(self):
-        client = Client()
-        response = client.get('/api/v1/events?event_type=conference')
-        response_data = response.json()
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response_data['results']), 1)
-        self.assertEqual(response_data['results'][0]['event_name'], self.event_name())
-        self.assertEqual(response_data['results'][0]['event_type'], 'conference')
 
 class CreateEventAPITest(TestCase):
 
