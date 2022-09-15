@@ -87,6 +87,7 @@ def create_event(event_data):
         price=event_data['price'],
         price_range=event_data['price_range'],
         cfp_url=event_data['cfp_url'],
+        event_type=event_data['event_type'],
     )
 
     try:
