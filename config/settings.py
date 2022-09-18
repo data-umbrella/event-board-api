@@ -238,6 +238,7 @@ PASSWORDLESS_AUTH = {
     ],
     'PASSWORDLESS_USER_MARK_EMAIL_VERIFIED': True,
     'PASSWORDLESS_USER_EMAIL_VERIFIED_FIELD_NAME': 'email_verified',
+    'PASSWORDLESS_EMAIL_CALLBACK': 'authentication.utils.send_email_with_callback_token',
 }
 
 if DEVELOPMENT_MODE:
