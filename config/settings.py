@@ -229,6 +229,7 @@ CORS_ALLOW_METHODS = [
 auth_template_name = 'authentication/auth.html'
 
 PASSWORDLESS_AUTH = {
+    'PASSWORDLESS_EMAIL_SUBJECT': 'Data Event Board: Sign In',
     'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'noreply@specollective.org',
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': 'authentication/auth.html',
