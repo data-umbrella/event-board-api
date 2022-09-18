@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Magic Link</title>
+  <title>Data Event Board: Sign In</title>
 </head>
 <body>
-  <h1>Click the link below to sign into your account</h1>
-  <a href="{{ magic_link_domain }}/registration/verify/{{ callback_token }}">
-    {{ magic_link_domain }}/registration/verify/{{ callback_token }}
+  <p>You are one click away from signing into the Data Event Board.</p>
+  <a href="{{ magic_link_domain }}/registration/verify/{{ callback_token }}?email={{ email }}" style="padding: 10px; background-color: blue; color: #fff; text-decoration: none; border-radius: 5px;">
+    One-click sign in
   </a>
 </body>
 </html>
