@@ -49,6 +49,7 @@ def parse_url(raw_url):
 def format_region(raw_string):
    return "-".join(raw_string.lower().split())
 
+
 LANGUAGE_MAP = {
     "English": "en",
     "Spanish": "es",
@@ -80,6 +81,10 @@ def format_region(region_string):
     return REGION_MAP[region_string]
 
 
+def format_price(price_string):
+   return "-".join(raw_string.lower().split())
+
+
 def create_event(event_data):
     """Creates an events object combining different elements from the list"""
 
@@ -104,7 +109,7 @@ def create_event(event_data):
         virtual=coerce_boolean(event_data['virtual']),
         hash_tag=event_data['hash_tag'],
         cfp_due_date=coerce_date_field(event_data['cfp_due_date']),
-        price=event_data['price'],
+        price=event_data['paid_or_free'],
         price_range=event_data['price_range'],
         cfp_url=event_data['cfp_url'],
         event_type=event_data['event_type'].lower(),
