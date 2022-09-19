@@ -34,6 +34,7 @@ class ListEvent(generics.ListCreateAPIView):
         'language': ['exact', 'contains'],
         'event_type': ['exact', 'contains'],
         'price': ['exact', 'contains'],
+        'tags': ['exact', 'contains'],
     }
 
 
