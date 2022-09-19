@@ -20,17 +20,6 @@ MODE_REFRESH = 'refresh'
 """ Clear all data and do not create any object """
 MODE_CLEAR = 'clear'
 
-class Command(BaseCommand):
-    help = "seed database for testing and development."
-
-    def add_arguments(self, parser):
-        parser.add_argument('--mode', type=str, help="Mode")
-
-    def handle(self, *args, **options):
-        self.stdout.write('seeding data...')
-        run_seed(self, options['mode'])
-        self.stdout.write('done.')
-
 
 def clear_data():
     """Deletes all the table data"""
@@ -56,7 +45,43 @@ def parse_url(raw_url):
     else:
         return raw_url
 
+
 def format_region(raw_string):
+   return "-".join(raw_string.lower().split())
+
+
+LANGUAGE_MAP = {
+    "English": "en",
+    "Spanish": "es",
+}
+
+REGION_MAP = {
+    "Online": "online",
+    "Canada / USA": "usa-canada",
+    "Europe": "europe",
+    "Asia": "asia",
+    "Africa": "africa",
+    "Latin America": "latin-america",
+    "Middle East": "middle-east",
+    "Oceania": "oceania",
+}
+
+
+def format_language(language_string):
+    if language_string == '': return 'en'
+    language_string = " ".join(language_string.strip().split())
+    languages = language_string.strip().split(',')
+    languages = [l for l in languages if l]
+    formatted_languages = map(lambda language: LANGUAGE_MAP[language], languages)
+    return ",".join(formatted_languages)
+
+
+def format_region(region_string):
+    if (region_string == ''): return None
+    return REGION_MAP[region_string]
+
+
+def format_price(price_string):
    return "-".join(raw_string.lower().split())
 
 
@@ -78,16 +103,16 @@ def create_event(event_data):
         image_url=event_data['image_url'],
         code_of_conduct_url=parse_url(event_data['code_of_conduct_url']),
         acronym=event_data['acronym'],
-        language=event_data['language'],
+        language=format_language(event_data['language']),
         region=format_region(event_data['region']),
         in_person=coerce_boolean(event_data['in_person']),
         virtual=coerce_boolean(event_data['virtual']),
         hash_tag=event_data['hash_tag'],
         cfp_due_date=coerce_date_field(event_data['cfp_due_date']),
-        price=event_data['price'],
+        price=event_data['paid_or_free'],
         price_range=event_data['price_range'],
         cfp_url=event_data['cfp_url'],
-        event_type=event_data['event_type'],
+        event_type=event_data['event_type'].lower(),
     )
 
     try:
@@ -115,3 +140,15 @@ def run_seed(self, mode):
         reader = csv.DictReader(csvfile)
         for row in reader:
             create_event(row)
+
+
+class Command(BaseCommand):
+    help = "seed database for testing and development."
+
+    def add_arguments(self, parser):
+        parser.add_argument('--mode', type=str, help="Mode")
+
+    def handle(self, *args, **options):
+        self.stdout.write('seeding data...')
+        run_seed(self, options['mode'])
+        self.stdout.write('done.')
