@@ -67,6 +67,7 @@ REGION_MAP = {
 
 
 def format_language(language_string):
+    if language_string == '': return 'en'
     language_string = " ".join(language_string.strip().split())
     languages = language_string.strip().split(',')
     languages = [l for l in languages if l]
@@ -76,7 +77,6 @@ def format_language(language_string):
 
 def format_region(region_string):
     if (region_string == ''): return None
-
     return REGION_MAP[region_string]
 
 
