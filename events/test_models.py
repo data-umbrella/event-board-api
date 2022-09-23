@@ -18,7 +18,6 @@ class EventTest(TestCase):
         event.save()
         self.assertEqual(event.organization_name, 'Example org name')
 
-
     def test_event_validations(self):
         event = Event.objects.create(
             event_name=None,
@@ -34,3 +33,16 @@ class EventTest(TestCase):
                 error.exception.message_dict['event_name'],
                 ['This field cannot be blank.'],
             )
+
+    def test_event_initialization(self):
+        event = Event.objects.create(
+            event_name='Example Title',
+            description='Example Description',
+            featured=False,
+            organization_name='Example org name',
+            location="Orlando",
+            region="Florida"
+        )
+
+        event.save()
+        self.assertEqual(event.latitude, 'Example org name')

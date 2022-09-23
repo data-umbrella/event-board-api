@@ -14,11 +14,11 @@ class ListEvent(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [
-      IsAuthenticatedOrReadOnly
+        IsAuthenticatedOrReadOnly
     ]
     filter_backends = [
-      SearchFilter,
-      DjangoFilterBackend
+        SearchFilter,
+        DjangoFilterBackend
     ]
     search_fields = [
         'event_name',
@@ -30,7 +30,7 @@ class ListEvent(generics.ListCreateAPIView):
         'featured': ['exact'],
         'published': ['exact'],
         'region': ['exact'],
-        'start_date':['gte', 'lte', 'exact', 'gt', 'lt'],
+        'start_date': ['gte', 'lte', 'exact', 'gt', 'lt'],
     }
 
 
@@ -43,6 +43,7 @@ class DetailEvent(generics.RetrieveUpdateDestroyAPIView):
     """
     Concrete view for updating a model instance.
     """
+
     def put(self, request, *args, **kwargs):
         try:
             instance = self.get_object()

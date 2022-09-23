@@ -29,3 +29,4 @@ services:
       - EMAIL_HOST_USER=example@example.com
     depends_on:
       - db
+    platform: linux/amd64

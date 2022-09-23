@@ -1,6 +1,15 @@
 from django.db import models
 from django.conf import settings
 from django.utils.html import format_html
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from geopy.geocoders import Nominatim
+
+
+def get_coordinates(location, region):
+    geolocator = Nominatim(user_agent='data-umbrella/event-board-api')
+    geolocation = geolocator.geocode(f'{location},{region}')
+    return (geolocation.latitude, geolocation.longitude)
 
 
 class Event(models.Model):
@@ -26,6 +35,8 @@ class Event(models.Model):
     end_time = models.CharField(max_length=200, blank=True, null=True)
     location = models.TextField(blank=True, null=True)
     region = models.CharField(max_length=200, blank=True, null=True)
+    latitude = models.DecimalField(max_digits=6, decimal_places=4, null=True)
+    longitude = models.DecimalField(max_digits=7, decimal_places=4, null=True)
     in_person = models.BooleanField(blank=True, null=True)
     virtual = models.BooleanField(blank=True, null=True)
     cfp_due_date = models.DateField(blank=True, null=True)
@@ -44,7 +55,14 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
-    
+
     def review_link(self):
         url = f"https://events.dataumbrella.org/events/{self.id}/details"
         return format_html(f'<a href="{url}" target="_blank">Review</a>', url=url)
+
+
+@receiver(pre_save, sender=Event)
+def save_coordinates(sender, instance, **kwargs):
+    coords = get_coordinates(instance.location, instance.region)
+    instance.latitude = coords[0]
+    instance.longitude = coords[1]

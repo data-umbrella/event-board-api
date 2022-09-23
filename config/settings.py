@@ -41,7 +41,8 @@ else:
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
-DYNAMIC_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+DYNAMIC_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS",
+                          "127.0.0.1,localhost").split(",")
 
 if DEVELOPMENT_MODE:
     STATIC_HOSTS = ['localhost']
@@ -178,14 +179,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-     ],
-     'DEFAULT_AUTHENTICATION_CLASSES': [
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'authentication.middleware.HttpOnlyTokenAuthentication'
-     ],
-     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-     'DEFAULT_FILTER_BACKENDS': [
-       'django_filters.rest_framework.DjangoFilterBackend',
-     ],
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
 }
@@ -196,11 +197,11 @@ else:
     CORS_ALLOWED_ORIGINS = [os.getenv('CLIENT_ORIGIN')]
 
 CORS_ALLOW_HEADERS = [
-  'accept-encoding',
-  'authorization',
-  'content-disposition',
-  'content-type', 'accept',
-  'origin',
+    'accept-encoding',
+    'authorization',
+    'content-disposition',
+    'content-type', 'accept',
+    'origin',
 ]
 
 SESSION_COOKIE_PATH = '/;HttpOnly'
