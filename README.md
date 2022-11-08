@@ -57,9 +57,10 @@ DELETE /api/v1/events/ID
   The command for starting the web service migrates the database for you running executing following commands before starting the web server. See the `docker-compose.yml` file for details.
   
   ```
-  python manage.py makemigrations
-  python manage.py migrate
-  python manage.py runserver 0.0.0.0:8000
+  docker compose run web python manage.py seed
+  docker compose run web python manage.py makemigrations
+  docker compose run web python manage.py migrate
+  docker compose run web python manage.py runserver 0.0.0.0:8000
   ```
 
   The first time running `docker compose up` you may run into an issue with the web server timing out waiting for the database to initialize. You may need to run `docker compose down` and running `docker compose up` again or starting the services separately.
