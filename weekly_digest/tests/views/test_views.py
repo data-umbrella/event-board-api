@@ -71,6 +71,22 @@ class SubscribeToWeeklyDigestTest(TestCase):
         self.assertEqual(response_data['email'], self.existing_email_address)
         self.assertEqual(response_data['subscribed'], False)
     
+    def test_weekly_digest_patch_request(self):
+        request_data = {
+            'subscribed': 'False',
+        }
+
+        response = self.client.patch(
+            f"/api/v1/weekly_digests/{self.weekly_digest_subscription.id}/",
+            json.dumps(request_data),
+            content_type="application/json",
+        )
+        response_data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response_data['email'], self.weekly_digest_subscription.email)
+        self.assertEqual(response_data['subscribed'], False)
+
+    
     def test_weekly_digest_get_request(self):
         response = self.client.get(
             f"/api/v1/weekly_digests/{self.weekly_digest_subscription.id}/",
@@ -86,6 +102,7 @@ class SubscribeToWeeklyDigestTest(TestCase):
             f"/api/v1/weekly_digests/{self.weekly_digest_subscription.id}/",
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
 
     def test_trigger_digest_email_request_week_events(self):
         Event.objects.create(
