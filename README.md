@@ -66,7 +66,7 @@ DELETE /api/v1/events/ID
   The first time running `docker compose up` you may run into an issue with the web server timing out waiting for the database to initialize. You may need to run `docker compose down` and running `docker compose up` again or starting the services separately.
 
   ```
-  docker compose up up
+  docker compose up db
   docker compose up web
   ```
 
