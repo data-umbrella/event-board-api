@@ -62,7 +62,7 @@ class CurrentUserView(ObtainAuthToken):
                 max_age=(3600 * 24 * 14),
                 expires=None,
                 httponly=True,
-                samesite='None',
+                samesite=settings.SAMESITE_POLICY,
                 domain=settings.AUTH_COOKIE_DOMAIN,
                 secure=True,
             )
