@@ -42,13 +42,13 @@ class CurrentUserView(ObtainAuthToken):
             response.data = { 'message': 'something went wrong' }
         else:
             response.status = status.HTTP_201_CREATED
-            subscribed = WeeklyDigestSubscription.objects.filter(email=user.email).exists()
+            subscribed = WeeklyDigestSubscription.objects.filter(email=user.email, subscribed=True).exists()
             response.data = {
                 'email_verified': user.email_verified,
                 'email': user.email,
                 'id': user.id,
                 'is_staff': user.is_staff,
-                'subscribed': subscribed
+                'weekly_digest': subscribed
             }
 
             response['Access-Control-Allow-Origin'] = '*'
