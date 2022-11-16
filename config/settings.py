@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'django_filters',
     'corsheaders',
     'rest_framework',
@@ -251,6 +252,7 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
     EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
@@ -270,3 +272,9 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+
+CRONJOBS = [ 
+    # TODO: fix "no crontab for root" error in heroku?
+    # ('*/1 * * * *', 'weekly_digest.cron.weekly_digest_job','>> ./file.log'), # for testing
+    # ('0 4 * * 1', 'weekly_digest.cron.weekly_digest_job'), # every monday at 4am
+]
