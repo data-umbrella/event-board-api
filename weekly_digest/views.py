@@ -40,7 +40,7 @@ def trigger_digest_email(request):
                 send_mail(
                     email_subject,
                     email_plaintext,
-                    settings.EMAIL_HOST_USER,
+                    'learn@specollective.org',
                     [email],
                     fail_silently=False,
                     html_message=html_message,)
