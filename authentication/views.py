@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, mixins, status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from weekly_digest.models import WeeklyDigestSubscription
 
 
 def get_token_from_request(request):
@@ -41,11 +42,13 @@ class CurrentUserView(ObtainAuthToken):
             response.data = { 'message': 'something went wrong' }
         else:
             response.status = status.HTTP_201_CREATED
+            subscribed = WeeklyDigestSubscription.objects.filter(email=user.email, subscribed=True).exists()
             response.data = {
                 'email_verified': user.email_verified,
                 'email': user.email,
                 'id': user.id,
                 'is_staff': user.is_staff,
+                'weekly_digest': subscribed
             }
 
             response['Access-Control-Allow-Origin'] = '*'
