@@ -48,3 +48,7 @@ class Event(models.Model):
     def review_link(self):
         url = f"https://events.dataumbrella.org/events/{self.id}/details"
         return format_html(f'<a href="{url}" target="_blank">Review</a>', url=url)
+    
+    def event_link(self):
+        url = f"https://events.dataumbrella.org/events/{self.id}/details"
+        return format_html(f'<a href="{url}" target="_blank">{self.event_name}</a>', url=url)
