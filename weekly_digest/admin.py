@@ -12,7 +12,7 @@ class WeeklyDigestSubscriptionAdmin(admin.ModelAdmin):
       'subscribed',
     )
 
-    list_filter = ('email', 'subscribed')
+    list_filter = ('subscribed',)
 
     change_list_template = 'admin/weekly_digests/weekly_digests_change_list.html'
     
