@@ -20,3 +20,4 @@ class EventAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Event, EventAdmin)
+admin.site.site_header = 'Event Board API dashboard'
