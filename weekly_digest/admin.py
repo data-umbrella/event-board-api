@@ -23,7 +23,12 @@ class WeeklyDigestSubscriptionAdmin(admin.ModelAdmin):
       return self.email
 
     def send_email(self, request):
-      trigger_digest_email()
+      email_sent = trigger_digest_email()
+      if (email_sent):
+          self.message_user(request, "✨ The Weekly Digest email was successfully sent to all subscribers!")
+      else:
+          self.message_user(request, "🚨 The Weekly Digest email failed to send")
+
       return HttpResponseRedirect("../")
 
     def get_urls(self):

@@ -34,9 +34,10 @@ def trigger_digest_email():
                     [email],
                     fail_silently=False,
                     html_message=html_message,)
+                return True
             except BaseException as e:
-                # Is there a better way to report errors?
                 print('Email failed to send: ', e)
+                return False
 
 
 def digest_events():
