@@ -1,11 +1,8 @@
 from django.contrib import admin
-from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import path
-from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from weekly_digest.utils import trigger_digest_email
-
-from django.utils.safestring import mark_safe
+from django.contrib import messages
 
 from weekly_digest.models import WeeklyDigestSubscription
 
@@ -15,7 +12,7 @@ class WeeklyDigestSubscriptionAdmin(admin.ModelAdmin):
       'subscribed',
     )
 
-    list_filter = ('email', 'subscribed')
+    list_filter = ('subscribed',)
 
     change_list_template = 'admin/weekly_digests/weekly_digests_change_list.html'
     
@@ -27,7 +24,7 @@ class WeeklyDigestSubscriptionAdmin(admin.ModelAdmin):
       if (email_sent):
           self.message_user(request, "✨ The Weekly Digest email was successfully sent to all subscribers!")
       else:
-          self.message_user(request, "🚨 The Weekly Digest email failed to send")
+          messages.error(request, "The Weekly Digest email failed to send")
 
       return HttpResponseRedirect("../")
 
