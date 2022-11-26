@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 import random
 from events.models import Event
 import logging
-import datetime
+from datetime import datetime, timedelta
 from faker import Faker
 import random
 import csv
@@ -19,6 +19,12 @@ MODE_REFRESH = 'refresh'
 
 """ Clear all data and do not create any object """
 MODE_CLEAR = 'clear'
+
+""" Seeds for testing pagination"""
+MODE_PAGINATION = 'pagination'
+
+
+fake = Faker()
 
 
 def clear_data():
@@ -81,10 +87,6 @@ def format_region(region_string):
     return REGION_MAP[region_string]
 
 
-def format_price(price_string):
-   return "-".join(raw_string.lower().split())
-
-
 def create_event(event_data):
     """Creates an events object combining different elements from the list"""
 
@@ -113,6 +115,7 @@ def create_event(event_data):
         price_range=event_data['price_range'],
         cfp_url=event_data['cfp_url'],
         event_type=event_data['event_type'].lower(),
+        published=True,
     )
 
     try:
@@ -136,10 +139,46 @@ def run_seed(self, mode):
     if mode == MODE_CLEAR:
         return
 
-    with open(f"{settings.BASE_DIR}/data/seeds/events.csv", newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            create_event(row)
+    if mode == MODE_PAGINATION:
+        for i in range(0, 200):
+            start_date = datetime.strptime('11-19-2022', '%m-%d-%Y')
+            start_date = start_date + timedelta(days=i)
+
+            featured = None
+            if i < 10:
+                featured = '1'
+
+            event_data = {
+                'event_name': fake.sentence(nb_words=10),
+                'description': fake.sentence(nb_words=10),
+                'organization_name': fake.company(),
+                'organization_url': 'http://www.example.com',
+                'featured': featured,
+                'start_date': start_date,
+                'end_date': start_date,
+                'tags': 'python',
+                'event_url': 'http://www.example.com',
+                'image_url': None,
+                'code_of_conduct_url': 'http://www.example.com',
+                'acronym': 'EXP',
+                'language': 'English',
+                'region': 'Canada / USA',
+                'in_person': bool(random.getrandbits(1)),
+                'virtual': bool(random.getrandbits(1)),
+                'hash_tag': '#exp',
+                'cfp_due_date': start_date,
+                'price': 'free',
+                'price_range': '$$$',
+                'paid_or_free': 'free',
+                'cfp_url': 'https://example.com',
+                'event_type': 'Conference',
+            }
+            create_event(event_data)
+    else:
+        with open(f"{settings.BASE_DIR}/data/seeds/events.csv", newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                create_event(row)
 
 
 class Command(BaseCommand):
