@@ -59,6 +59,8 @@ def format_region(raw_string):
 LANGUAGE_MAP = {
     "English": "en",
     "Spanish": "es",
+    "Portuguese": "pt",
+    "French": "fr",
 }
 
 REGION_MAP = {
@@ -134,7 +136,8 @@ def run_seed(self, mode):
     :return:
     """
     # Clear data from tables
-    clear_data()
+    if settings.DEVELOPMENT_MODE:
+        clear_data()
 
     if mode == MODE_CLEAR:
         return
@@ -175,7 +178,7 @@ def run_seed(self, mode):
             }
             create_event(event_data)
     else:
-        with open(f"{settings.BASE_DIR}/data/seeds/events.csv", newline='') as csvfile:
+        with open(f"{settings.BASE_DIR}/data/seeds/events-22-23.csv", newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 create_event(row)
