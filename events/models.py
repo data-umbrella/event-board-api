@@ -41,6 +41,8 @@ class Event(models.Model):
     image_url = models.URLField(max_length=500, blank=True, null=True)
     cfp_url = models.URLField(blank=True, null=True)
     price_range = models.CharField(max_length=200, blank=True, null=True)
+    social_media_links = models.JSONField(blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.event_name
