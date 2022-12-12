@@ -8,6 +8,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = (
       "event_name",
       "start_date",
+      "end_date",
       "featured",
       "published",
       "author",
