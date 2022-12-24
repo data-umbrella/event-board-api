@@ -43,6 +43,7 @@ class Event(models.Model):
     price_range = models.CharField(max_length=200, blank=True, null=True)
     social_media_links = models.JSONField(blank=True, null=True)
     country = models.CharField(max_length=200, blank=True, null=True)
+    timezone = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.event_name
