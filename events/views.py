@@ -11,7 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 class ListEvent(generics.ListCreateAPIView):
     parser_classes = (MultiPartParser, FormParser, JSONParser)
-    queryset = Event.objects.all()
+    queryset = Event.objects.order_by('start_date')
     serializer_class = EventSerializer
     permission_classes = [
       IsAuthenticatedOrReadOnly
