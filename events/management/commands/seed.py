@@ -178,7 +178,7 @@ def run_seed(self, mode):
             }
             create_event(event_data)
     else:
-        with open(f"{settings.BASE_DIR}/data/seeds/events-22-23.csv", newline='') as csvfile:
+        with open(f"{settings.BASE_DIR}/data/seeds/events-22-23.uploaded2.7.csv", newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 create_event(row)
