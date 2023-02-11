@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 
 
 class EventAdmin(admin.ModelAdmin):
+    readonly_fields = ('author', 'created_at', 'updated_at')
     list_display = (
       "event_name",
       "start_date",
@@ -13,8 +14,9 @@ class EventAdmin(admin.ModelAdmin):
       "published",
       "author",
       "review_link",
+      "created_at",
+      "updated_at",
     )
-    readonly_fields = ('author',)
 
     def identifier(self, obj):
         return self.event_name
