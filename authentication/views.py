@@ -89,3 +89,12 @@ def sign_out(request):
         secure=True,
     )
     return response
+
+
+@api_view(['PUT'])
+@def update_email(request):
+"""
+API endpoint to update user email
+"""
+
+return response
