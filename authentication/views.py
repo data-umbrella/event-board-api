@@ -42,12 +42,13 @@ class CurrentUserView(ObtainAuthToken):
         else:
             response.status = status.HTTP_201_CREATED
             subscribed = WeeklyDigestSubscription.objects.filter(email=user.email).first()
+            
             response.data = {
                 'email_verified': user.email_verified,
                 'email': user.email,
                 'id': user.id,
                 'is_staff': user.is_staff,
-                'weekly_digest': WeeklyDigestSubscriptionSerializer(subscribed).data
+                'weekly_digest': subscribed and WeeklyDigestSubscriptionSerializer(subscribed).data
             }
 
             response['Access-Control-Allow-Origin'] = '*'
