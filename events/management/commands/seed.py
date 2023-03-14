@@ -64,14 +64,14 @@ LANGUAGE_MAP = {
 }
 
 REGION_MAP = {
-    "Online": "online",
-    "Canada / USA": "usa-canada",
-    "Europe": "europe",
-    "Asia": "asia",
     "Africa": "africa",
+    "Asia": "asia",
+    "Canada / USA": "canada-usa",
+    "Europe": "europe",
     "Latin America": "latin-america",
     "Middle East": "middle-east",
     "Oceania": "oceania",
+    "Online": "online",
 }
 
 
