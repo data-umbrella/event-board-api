@@ -1,6 +1,6 @@
 # Data Umbrella Community Events Board
 
-This repository contains the code for Data Umbrella's community event board.
+This repository contains the code for Data Umbrella's community events board.
 
 # Overview
 
@@ -114,7 +114,7 @@ git push -u origin new-branch-name
 
 ### 4. Open a pull request
 
-When you push up a new branch to Github a link to directly open a pull request is printed to the console. You can also visit https://github.com/specollective/event-board-api and a notification to **Compare & pull request** should be visible at the top of the repository. If you wait a little while the notification may disappear. You can also find your branch from the branch drop down and visit a link that should look like https://github.com/specollective/event-board-api/tree/new-branch-name. From there you can click the **Contribute** dropdown button which will the **Open Pull Request** for the branch. Once you've open a pull request this repo's maintainers will review your contribution. The repo's maintainers will merge it if it is looks good, or they may ask you to make some changes.
+When you push up a new branch to GitHub a link to directly open a pull request is printed to the console. You can also visit https://github.com/specollective/event-board-api and a notification to **Compare & pull request** should be visible at the top of the repository. If you wait a little while the notification may disappear. You can also find your branch from the branch drop down and visit a link that should look like https://github.com/specollective/event-board-api/tree/new-branch-name. From there you can click the **Contribute** dropdown button which will the **Open Pull Request** for the branch. Once you've open a pull request this repo's maintainers will review your contribution. The repo's maintainers will merge it if it is looks good, or they may ask you to make some changes.
 
 # Testing
 
@@ -126,8 +126,8 @@ The application currently uses Django's out-of-the-box testing environment. You 
 
 # Continuous Integration
 
-The application's tests are run via Github Actions for all new branches and pull requests. The configs for the test workflow can be found in [.github/workflows/test.yaml](https://github.com/specollective/event-board-api/blob/main/.github/workflows/test.yaml).
+The application's tests are run via GitHub Actions for all new branches and pull requests. The configs for the test workflow can be found in [.github/workflows/test.yaml](https://github.com/specollective/event-board-api/blob/main/.github/workflows/test.yaml).
 
 # Deployment
 
-The Data Event Board is deployed on [DigitalOceans App Platform](https://www.digitalocean.com/products/app-platform). Digital Ocean (DO) connects to the Github and on initialization detects that the repository is a Django project and automatically populates default configuration. The project is configured to parameterize the settings for the project using encrypted environment variables set in DO. To learn more deploying Django apps on Digital Ocean (DO) App see their tutorial https://docs.digitalocean.com/tutorials/app-deploy-django-app.
+The Data Events Board is deployed on [DigitalOceans App Platform](https://www.digitalocean.com/products/app-platform). Digital Ocean (DO) connects to the GitHub and on initialization detects that the repository is a Django project and automatically populates default configuration. The project is configured to parameterize the settings for the project using encrypted environment variables set in DO. To learn more deploying Django apps on Digital Ocean (DO) App see their tutorial https://docs.digitalocean.com/tutorials/app-deploy-django-app.
