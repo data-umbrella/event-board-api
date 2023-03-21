@@ -55,12 +55,24 @@ def parse_url(raw_url):
 def format_region(raw_string):
    return "-".join(raw_string.lower().split())
 
+def parse_social_links(media_data):
+    col_names = ['url_linkedin', 'url_twittter', 'url_other']
+    links = []
+    for col_name in col_names:
+        value = media_data[col_name]
+
+        if value != '':
+            links.append({'id': col_name, 'url': value})
+    
+    return links
+
 
 LANGUAGE_MAP = {
     "English": "en",
     "Spanish": "es",
     "Portuguese": "pt",
     "French": "fr",
+    "Japanese": "jp"
 }
 
 REGION_MAP = {
@@ -94,6 +106,8 @@ def create_event(event_data):
 
     logger.info("Creating event")
 
+    media_data = [event_data('url_linkedin'), event_data('url_twitter'), event_data('url_other')]
+
     event = Event(
         event_name=event_data['event_name'],
         description='',
@@ -118,6 +132,7 @@ def create_event(event_data):
         cfp_url=event_data['cfp_url'],
         event_type=event_data['event_type'].lower(),
         published=True,
+        social_media_links=parse_social_links(media_data),
     )
 
     try:
@@ -178,7 +193,7 @@ def run_seed(self, mode):
             }
             create_event(event_data)
     else:
-        with open(f"{settings.BASE_DIR}/data/seeds/events-22-23.uploaded2.7.csv", newline='') as csvfile:
+        with open(f"{settings.BASE_DIR}/data/seeds/events-2023-03-20.csv", newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 create_event(row)
