@@ -1,14 +1,11 @@
 import json
-
+from http.cookies import SimpleCookie
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-from http.cookies import SimpleCookie
-
+from drfpasswordless.utils import CallbackToken
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-
-from drfpasswordless.utils import CallbackToken
 
 User = get_user_model()
 
@@ -19,7 +16,6 @@ class RegistrationAPITest(TestCase):
         self.email = 'janesmith@example.com'
         self.url = '/auth/email/'
 
-    # curl -X POST -d "email=example@example.com" localhost:8000/auth/email/
     def test_auth_registration_request(self):
         data = {'email': self.email}
 
@@ -44,8 +40,10 @@ class ConfirmationAPITest(TestCase):
         self.url = '/auth/email/'
         self.challenge_url = '/auth/token/'
         self.user = User.objects.create(**{'email': self.email})
+    
+    def tearDown(self):
+        self.user.delete()
 
-    # curl -X POST -d "email=example@example.com&token=815381" localhost:8000/auth/token/
     def test_email_auth_success(self):
         data = {'email': self.email}
         response = self.client.post(self.url, data)
@@ -63,8 +61,6 @@ class ConfirmationAPITest(TestCase):
         auth_token = challenge_response.data['token']
         self.assertEqual(auth_token, Token.objects.filter(key=auth_token).first().key)
 
-    def tearDown(self):
-        self.user.delete()
 
 class CurrentUserAPITest(TestCase):
 
@@ -74,6 +70,9 @@ class CurrentUserAPITest(TestCase):
         self.challenge_url = '/auth/token/'
         self.current_user_url = '/api/v1/current_user/'
         self.user = User.objects.create(**{'email': self.email})
+    
+    def tearDown(self):
+        self.user.delete()
 
     def generate_auth_token(self):
         self.client.post(self.registration_url, {'email': self.email})
@@ -104,5 +103,41 @@ class CurrentUserAPITest(TestCase):
 
         self.assertEqual(current_user_response.status_code, status.HTTP_200_OK)
 
+
+class DeleteUserAPITest(TestCase):
+
+    def setUp(self):
+        self.email = 'janesmith@example.com'
+        self.registration_url = '/auth/email/'
+        self.challenge_url = '/auth/token/'
+        self.delete_account_url = '/api/v1/delete_account/'
+        self.user = User.objects.create(**{'email': self.email})
+
     def tearDown(self):
         self.user.delete()
+
+    def generate_auth_token(self):
+        self.client.post(self.registration_url, {'email': self.email})
+        callback_token = CallbackToken.objects.filter(user=self.user, is_active=True).first()
+        challenge_response = self.client.post(self.challenge_url, {
+            'email': self.email,
+            'token': callback_token,
+        })
+        return challenge_response.data['token']
+
+    def test_current_user_with_http_cookies_success(self):
+        delete_account_response = self.client.delete(
+            self.delete_account_url,
+            content_type='application/json',
+            HTTP_COOKIE=f"access_token={self.generate_auth_token()}",
+        )
+
+        self.assertEqual(delete_account_response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_user_with_http_auth_header_success(self):
+        delete_account_response = self.client.delete(
+            self.delete_account_url,
+            content_type='application/json',
+            HTTP_AUTHORIZATION=f"Token {self.generate_auth_token()}",
+        )
+        self.assertEqual(delete_account_response.status_code, status.HTTP_204_NO_CONTENT)
