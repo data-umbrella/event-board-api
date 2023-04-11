@@ -89,3 +89,21 @@ def sign_out(request):
         secure=True,
     )
     return response
+
+# DELETE /api/delete_account
+@api_view(['DELETE'])
+def delete_account(request):
+    """
+    API endpoint to delete a user's account
+    """
+    response = Response(status=status.HTTP_204_NO_CONTENT)
+    response.set_cookie(
+        'access_token',
+        value='',
+        expires=None,
+        httponly=True,
+        samesite='None',
+        domain=settings.AUTH_COOKIE_DOMAIN,
+        secure=True,
+    )
+    return response

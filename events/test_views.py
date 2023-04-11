@@ -7,6 +7,7 @@ from drfpasswordless.utils import CallbackToken
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from events.models import Event
+from authentication.test_helpers import generate_auth_token
 
 
 User = get_user_model()
@@ -155,16 +156,8 @@ class CreateEventAPITest(TestCase):
 
     def setUp(self):
         self.email = 'janesmith@example.com'
-        self.url = '/auth/email/'
-        self.challenge_url = '/auth/token/'
         self.user = User.objects.create(**{'email': self.email})
-        data = {'email': self.email}
-        self.client.post(self.url, data)
-
-        callback_token = CallbackToken.objects.filter(user=self.user, is_active=True).first()
-        challenge_data = {'email': self.email, 'token': callback_token}
-        challenge_response = self.client.post(self.challenge_url, challenge_data)
-        self.auth_token = challenge_response.data['token']
+        self.auth_token = generate_auth_token(self.client, self.user)
         self.example_event = Event.objects.create(
             event_name='Example title',
             description='Example Description #1',
@@ -199,7 +192,6 @@ class CreateEventAPITest(TestCase):
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Token BAD_TOKEN",
         )
-        response_data = response.json()
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_authenticated_event_put_request(self):
