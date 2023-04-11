@@ -59,8 +59,10 @@ def parse_social_links(media_data):
     col_names = ['url_linkedin', 'url_twittter', 'url_other']
     links = []
     for col_name in col_names:
-        value = media_data[col_name]
+        if col_name not in media_data:
+            continue
 
+        value = media_data[col_name]
         if value != '':
             links.append({'id': col_name, 'url': value})
     
@@ -106,7 +108,7 @@ def create_event(event_data):
 
     logger.info("Creating event")
 
-    media_data = [event_data('url_linkedin'), event_data('url_twitter'), event_data('url_other')]
+    media_data = [event_data['url_linkedin'], event_data['url_twitter'], event_data['url_other']]
 
     event = Event(
         event_name=event_data['event_name'],
@@ -132,7 +134,7 @@ def create_event(event_data):
         cfp_url=event_data['cfp_url'],
         event_type=event_data['event_type'].lower(),
         published=True,
-        social_media_links=parse_social_links(media_data),
+        social_media_links=parse_social_links(event_data),
     )
 
     try:
