@@ -108,8 +108,6 @@ def create_event(event_data):
 
     logger.info("Creating event")
 
-    media_data = [event_data['url_linkedin'], event_data['url_twitter'], event_data['url_other']]
-
     event = Event(
         event_name=event_data['event_name'],
         description='',
