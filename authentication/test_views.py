@@ -125,7 +125,7 @@ class DeleteUserAPITest(TestCase):
         })
         return challenge_response.data['token']
 
-    def test_current_user_with_http_cookies_success(self):
+    def test_delete_user_with_http_cookies_success(self):
         delete_account_response = self.client.delete(
             self.delete_account_url,
             content_type='application/json',
