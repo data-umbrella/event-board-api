@@ -13,7 +13,7 @@ This service implements a basic REST API that leverages the Django REST Framewor
 
 ## Development Dependencies
 
-- Docker Desktop
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - Docker Compose
 
 ## Python Dependencies
@@ -52,6 +52,14 @@ DELETE /api/v1/events/ID
   ```
   docker compose build
   ```
+
+Note: Docker (desktop) should be running before `docker compose build`. Otherwise you will see this message.
+```console
+▶ docker compose build
+[+] Building 0.0s (0/0)                                                                                                      
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+(base) 
+```
 
 ### 3. Start the web server and database
 
