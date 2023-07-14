@@ -41,6 +41,13 @@ DELETE /api/v1/events/ID
 # Getting started with development
 
 ### 1. Clone the git repository
+Note: You will want to create a project folder and clone both the "event-board-web" and "event-board-api" repositories in to that folder.
+
+Suggested folder name:  du-event-board
+  ```console
+  mkdir du-event-board
+  cd du-eventboard
+  ```
 
   ```console
   git clone git@github.com:data-umbrella/event-board-api.git
