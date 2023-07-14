@@ -46,7 +46,7 @@ Note: You will want to create a project folder and clone both the "event-board-w
 Suggested folder name:  du-event-board
   ```console
   mkdir du-event-board
-  cd du-eventboard
+  cd du-event-board
   ```
 
   ```console
