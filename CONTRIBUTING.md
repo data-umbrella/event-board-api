@@ -41,15 +41,26 @@ DELETE /api/v1/events/ID
 # Getting started with development
 
 ### 1. Clone the git repository
+Note: You will want to create a project folder and clone both the "event-board-web" and "event-board-api" repositories in to that folder.
 
+Suggested folder name:  du-event-board
+  ```console
+  mkdir du-event-board
+  cd du-event-board
   ```
+
+  ```console
   git clone git@github.com:data-umbrella/event-board-api.git
+  ```
+  
+  Go into the repository:  
+  ```console
   cd event-board-api
   ```
 
 ### 2. Build the docker images
 
-  ```
+  ```console
   docker compose build
   ```
 
@@ -63,7 +74,7 @@ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docke
 
 ### 3. Start the web server and database
 
-  ```
+  ```console
   docker compose up
   ```
 
@@ -71,21 +82,29 @@ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docke
   
   ```console
   docker compose run web python manage.py seed
+  ```
+  ```console
   docker compose run web python manage.py makemigrations
+  ```
+  ```console
   docker compose run web python manage.py migrate
+  ```
+  ```console
   docker compose run web python manage.py runserver 0.0.0.0:8000
   ```
 
   The first time running `docker compose up` you may run into an issue with the web server timing out waiting for the database to initialize. You may need to run `docker compose down` and running `docker compose up` again or starting the services separately.
 
-  ```
+  ```console
   docker compose up db
+  ```
+  ```console
   docker compose up web
   ```
 
 ### 4. Create admin user
 
-  ```
+  ```console
   docker compose run web python manage.py createsuperuser --email example@example.com
   ```
 
@@ -99,7 +118,7 @@ Visit the http://localhost:8000/api/v1/events to view the API documentation site
 
 ### 7. Running tests
 
-  ```
+  ```console
   docker-compose run web python manage.py test
   ```
 
@@ -107,21 +126,25 @@ Visit the http://localhost:8000/api/v1/events to view the API documentation site
 
 ### 1. Checkout a feature branch
 
-```
+```console
 git checkout -b <GITHUB_USERNAME>/<FEATURE_NAME>
 ```
 
 ### 2. Commit changes
 
-```
+```console
 echo "Example change" > example.txt
+```
+```console
 git add example.txt
+```
+```console
 git commit -m "Add example change"
 ```
 
 ### 3. Push changes to your forked repository
 
-```
+```console
 git push -u origin new-branch-name
 ```
 
@@ -133,7 +156,7 @@ When you push up a new branch to GitHub a link to directly open a pull request i
 
 The application currently uses Django's out-of-the-box testing environment. You can run all tests using the manage.py comment.
 
-  ```
+  ```console
   docker compose up python manage.py test
   ```
 
