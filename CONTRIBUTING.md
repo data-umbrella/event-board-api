@@ -41,7 +41,6 @@ DELETE /api/v1/events/ID
 # Getting started with development
 
 ### 1. Clone the git repository
-Note: You will want to create a project folder and clone both the "event-board-web" and "event-board-api" repositories in to that folder.
 
 Suggested folder name:  du-event-board
   ```console
@@ -74,8 +73,6 @@ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docke
 
 ### 3. Start the web server and database
 
-Note: There are known issue with running Docker on different platforms. If you are running into issues setting up the development environment please reach out.
-
   ```console
   docker compose up
   ```
@@ -103,6 +100,29 @@ Note: There are known issue with running Docker on different platforms. If you a
   ```console
   docker compose up web
   ```
+
+  If you run into an error about mismatches for Postgresql versions you make need to clear the local cache.
+
+  ```console
+  rm -rf data/db
+  ```
+
+  ### Github Codespace
+
+  The API can be easily setup if you launch a new Github Codespace. Core functionality can be enabled by created a `.env` with `DEVELOPMENT=True` and updating the `settings.py`. Once 
+  the configs have been setup you can run the other docker compose commands.
+
+  ```console
+  LOCALHOST_CLIENT_ORIGIN = 'https://bookish-telegram-jq66g69j74fqqx5-3000.app.github.dev'
+  AUTH_COOKIE_DOMAIN = 'bookish-telegram-jq66g69j74fqqx5-3000.app.github.dev'
+  ```
+
+  The Codespace ports will need to be opened to the public. From a new tab, after the server has been started run the follow command.
+
+  ```console
+  gh codespace ports visibility 8000:public -c $CODESPACE_NAME
+  ```
+  See the Github discussion for more details about this issue https://github.com/orgs/community/discussions/15351.
 
 ### 4. Create admin user
 
