@@ -113,8 +113,8 @@ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docke
   the configs have been setup you can run the other docker compose commands.
 
   ```console
-  LOCALHOST_CLIENT_ORIGIN = 'https://bookish-telegram-jq66g69j74fqqx5-3000.app.github.dev'
-  AUTH_COOKIE_DOMAIN = 'bookish-telegram-jq66g69j74fqqx5-3000.app.github.dev'
+  LOCALHOST_CLIENT_ORIGIN = 'https://client-domain.app.github.dev'
+  AUTH_COOKIE_DOMAIN = 'client-domain.app.github.dev'
   ```
 
   The Codespace ports will need to be opened to the public. From a new tab, after the server has been started run the follow command.
