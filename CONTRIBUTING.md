@@ -74,6 +74,8 @@ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docke
 
 ### 3. Start the web server and database
 
+Note: There are known issue with running Docker on different platforms. If you are running into issues setting up the development environment please reach out.
+
   ```console
   docker compose up
   ```
