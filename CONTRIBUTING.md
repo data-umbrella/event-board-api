@@ -216,6 +216,14 @@ Events can be uploaded from a CSV file. You can add a file with new events to th
 20. `cfp_url` (optional): The URL for submitting proposals or papers.
 21. `event_type` (required): The type of the event, e.g., "Conference", "Workshop".
 
+The seed script is defined in `events/management/commands/seed.py` and run with the command.
+
+```
+python manage.py seed
+```
+
+The script and data file can be tested locally via Docker in a Codespace. In order to run in production, you need admin access to the Digital Ocean App platform instance. From the Digital Ocean App Platform page for the app and click the "Console tab" to be able to run a python script.
+
 ## Notes:
 
 - Boolean values (e.g., `featured`, `in_person`, `virtual`) should be represented as '1' for true and '0' for false.
