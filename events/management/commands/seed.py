@@ -81,6 +81,7 @@ REGION_MAP = {
     "Africa": "africa",
     "Asia": "asia",
     "Canada / USA": "canada-usa",
+    "USA": "canada-usa",
     "Europe": "europe",
     "Latin America": "latin-america",
     "Middle East": "middle-east",
@@ -193,7 +194,7 @@ def run_seed(self, mode):
             }
             create_event(event_data)
     else:
-        with open(f"{settings.BASE_DIR}/data/seeds/events-2023-03-20.csv", newline='') as csvfile:
+        with open(f"{settings.BASE_DIR}/data/seeds/events-02-04-24.csv", newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 create_event(row)
