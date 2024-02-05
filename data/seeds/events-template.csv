@@ -1,0 +1,2 @@
+event_name,organization_name,organization_url,featured,start_date,end_date,tags,event_url,image_url,code_of_conduct_url,acronym,language,region,in_person,virtual,hash_tag,cfp_due_date,price,price_range,cfp_url,event_type
+Example Event,Example Organization,http://www.example.org,1,2024-05-01,2024-05-03,tech,http://www.example-event.org,image_url,http://www.example-code-of-conduct.org,EXM,en,Europe,1,0,#example,2024-03-01,paid,$$,http://www.example-cfp.org,Conference

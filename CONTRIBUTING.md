@@ -190,6 +190,47 @@ The application's tests are run via GitHub Actions for all new branches and pull
 
 The Data Events Board is deployed on [DigitalOceans App Platform](https://www.digitalocean.com/products/app-platform). Digital Ocean (DO) connects to the GitHub and on initialization detects that the repository is a Django project and automatically populates default configuration. The project is configured to parameterize the settings for the project using encrypted environment variables set in DO. To learn more deploying Django apps on Digital Ocean (DO) App see their tutorial https://docs.digitalocean.com/tutorials/app-deploy-django-app.
 
+## Uploading Data
+
+Events can be uploaded from a CSV file. You can add a file with new events to the data/seeds directory in the event-board-api repository. The CSV file should have a header row with the following column names:
+
+1. `event_name` (required): The name of the event.
+2. `organization_name` (required): The name of the organizing entity for the event.
+3. `organization_url` (required): The URL of the organizing entity's website.
+4. `featured` (required): Indicates whether the event is featured. Use '1' for true and '0' for false.
+5. `start_date` (required): The start date of the event in the format 'YYYY-MM-DD'.
+6. `end_date` (required): The end date of the event in the format 'YYYY-MM-DD'.
+7. `tags` (required): Comma-separated list of tags associated with the event.
+8. `event_url` (required): The URL of the event's website.
+9. `image_url` (optional): The URL of an image associated with the event.
+10. `code_of_conduct_url` (optional): The URL of the event's code of conduct.
+11. `acronym` (optional): The acronym or short form of the event name.
+12. `language` (required): The language(s) of the event, separated by commas. Use values: "English", "Spanish", "Portuguese", "French", "Japanese".
+13. `region` (optional): The region of the event. Use values: "Africa", "Asia", "Canada / USA", "Europe", "Latin America", "Middle East", "Oceania", "Online".
+14. `in_person` (required): Indicates whether the event has in-person components. Use 'Yes' for true and 'No' for false.
+15. `virtual` (required): Indicates whether the event has virtual components. Use 'Yes' for true and 'No' for false.
+16. `hash_tag` (required): The event's hashtag.
+17. `cfp_due_date` (optional): The Call for Papers (CFP) due date in the format 'YYYY-MM-DD'.
+18. `price` (required): The price category of the event. Use values like 'free', 'paid', etc.
+19. `price_range` (optional): A description of the price range, e.g., '$$$'.
+20. `cfp_url` (optional): The URL for submitting proposals or papers.
+21. `event_type` (required): The type of the event, e.g., "Conference", "Workshop".
+
+## Notes:
+
+- Boolean values (e.g., `featured`, `in_person`, `virtual`) should be represented as '1' for true and '0' for false.
+- Date fields (`start_date`, `end_date`, `cfp_due_date`) should be in the 'YYYY-MM-DD' format.
+- Language should be one or more of the specified values separated by commas.
+- Region should match one of the specified values.
+- If a field is optional and not applicable, leave it blank.
+- Ensure that the CSV file does not contain extra columns or rows beyond the header and data.
+
+## Example:
+
+```csv
+event_name,organization_name,organization_url,featured,start_date,end_date,tags,event_url,image_url,code_of_conduct_url,acronym,language,region,in_person,virtual,hash_tag,cfp_due_date,price,price_range,cfp_url,event_type
+Example Event,Example Organization,http://www.example.org,1,2024-05-01,2024-05-03,tech,http://www.example-event.org,image_url,http://www.example-code-of-conduct.org,EXM,en,Europe,1,0,#example,2024-03-01,paid,$$,http://www.example-cfp.org,Conference
+```
 
 ---
 
