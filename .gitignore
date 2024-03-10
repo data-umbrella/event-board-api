@@ -5,3 +5,4 @@ staticfiles
 python-env
 .DS_Store
 data/db
+.vscode
